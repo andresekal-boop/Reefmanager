@@ -1,0 +1,32 @@
+name: Build Jekyll with Docker
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Repository auschecken
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Jekyll-Site mit dem offiziellen jekyll/builder Docker-Image bauen
+      - name: Build Jekyll Site via Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: jekyll/builder:latest
+          options: -v ${{ github.workspace }}:/srv/jekyll -w /srv/jekyll
+          run: |
+            chown -R jekyll:jekyll /srv/jekyll
+            bundle install
+            jekyll build
+
+      # 3. Optional: Die gebauten Dateien (im Ordner _site) als Artifact speichern
+      - name: Upload built site
+        uses: actions/upload-artifact@v4
+        with:
+          name: jekyll-site
+          path: _site/

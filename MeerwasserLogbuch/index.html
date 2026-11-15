@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meerwasser-Logbuch</title>
+<style>
+:root{--bg:#f2f7f9;--card:#fff;--tx:#12303d;--mu:#5b7783;--ac:#0a7ea4;--ok:#1b9e5a;--wa:#d99a00;--er:#d64545;--bd:#d6e2e8}
+@media(prefers-color-scheme:dark){:root{--bg:#0a1920;--card:#12262f;--tx:#e3f0f5;--mu:#8fadba;--ac:#3cb8e0;--bd:#23404c}}
+*{box-sizing:border-box}body{margin:0;font:15px/1.45 system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+header{background:var(--ac);color:#fff;padding:14px 16px;font-size:18px;font-weight:600}
+nav{display:flex;gap:4px;overflow-x:auto;padding:8px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:5}
+nav button{border:0;background:none;color:var(--mu);padding:8px 12px;border-radius:8px;font:inherit;white-space:nowrap;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff}
+main{max-width:900px;margin:0 auto;padding:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+h2{margin:0 0 8px;font-size:17px}.mu{color:var(--mu);font-size:13px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+label{display:block;font-size:12px;color:var(--mu)}
+input,select,textarea{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+button.b{background:var(--ac);color:#fff;border:0;padding:9px 14px;border-radius:8px;font:inherit;cursor:pointer;margin-top:10px}
+button.s{background:none;border:1px solid var(--bd);color:var(--tx);padding:4px 9px;border-radius:6px;cursor:pointer;font:inherit;font-size:13px}
+.chip{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;color:#fff}
+.c0{background:var(--ok)}.c1{background:var(--wa)}.c2{background:var(--er)}
+.t{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}
+td,th{padding:6px 8px;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
+.v{border-left:4px solid;padding:8px 10px;border-radius:8px;background:var(--bg)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border:0}.x0{color:var(--ok)}.x1{color:var(--wa)}.x2{color:var(--er)}
+svg text{fill:var(--mu);font-size:11px}
+body{background:linear-gradient(180deg,var(--bg),#bfe9f3) fixed}
+@media(prefers-color-scheme:dark){body{background:linear-gradient(180deg,#06222e,#0a3a4d) fixed}}
+header{background:linear-gradient(120deg,#0a8fb8,#1f5fd1 60%,#7b3fe4);font-size:21px;padding:18px 16px}
+.card{border-top:4px solid var(--ac);box-shadow:0 2px 8px rgba(10,120,160,.12)}
+.card:nth-of-type(3n+2){border-top-color:#ff6b57}.card:nth-of-type(3n){border-top-color:#2fd0c4}
+nav button.on{background:linear-gradient(120deg,#0a8fb8,#1f5fd1)}
+button.b{background:linear-gradient(120deg,#ff7a59,#ff4f7b)}
+.v{background:linear-gradient(135deg,var(--card),var(--bg))}
+.pic{display:inline-flex;flex:none;background:linear-gradient(180deg,#c9f0f8,#4fb9dd);border-radius:12px;padding:4px}
+@media print{header,nav,button,select{display:none!important}body{background:#fff}.card{box-shadow:none}}
+input,select,textarea{font-size:16px;padding:11px 12px;border-radius:12px}
+body{font-size:16px;line-height:1.5}
+.card{border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(10,120,160,.10)}
+button.s{padding:8px 12px;border-radius:10px;min-height:36px}
+button.b{border-radius:12px;padding:12px 18px;font-weight:600}
+header{position:sticky;top:0;z-index:6;border-radius:0 0 18px 18px}
+main{padding:14px 12px 100px}footer{padding-bottom:100px!important}
+nav{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:20;display:flex;justify-content:space-around;gap:0;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--bd);border-bottom:0;overflow:visible;box-shadow:0 -4px 16px rgba(10,120,160,.12)}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;padding:6px 2px;border-radius:12px;background:none;min-width:0}
+nav button.on{background:none;color:var(--ac);font-weight:700}
+.q{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px 10px;text-align:center;color:var(--tx);font:inherit;font-size:14px;cursor:pointer;line-height:1.3}
+.q:active{transform:scale(.98)}
+</style></head><body>
+<header>🐠 Meerwasser-Logbuch<div style="font-size:13px;font-weight:400;opacity:.9">Dein Riffaquarium im Blick · App von André Sekal 🪸🐟</div></header>
+<nav id="nav"></nav><main id="m"></main><footer style="text-align:center;padding:16px;font-size:13px;color:var(--mu)">Meerwasser-Logbuch · Entwickelt von André Sekal</footer>
+<script>
+const P=[
+{k:'temp',n:'Temperatur',u:'°C',a:24,b:26,s:.1},
+{k:'sal',n:'Salinität',u:'ppt',a:34,b:36,s:.1},
+{k:'ph',n:'pH-Wert',u:'',a:8,b:8.4,s:.01},
+{k:'kh',n:'Karbonathärte',u:'dKH',a:7,b:9,s:.1},
+{k:'ca',n:'Calcium',u:'mg/l',a:400,b:450,s:1},
+{k:'mg',n:'Magnesium',u:'mg/l',a:1250,b:1350,s:1},
+{k:'no3',n:'Nitrat',u:'mg/l',a:2,b:10,s:.1},
+{k:'po4',n:'Phosphat',u:'mg/l',a:.01,b:.05,s:.01},
+{k:'no2',n:'Nitrit',u:'mg/l',a:0,b:.05,s:.01},
+{k:'nh4',n:'Ammonium',u:'mg/l',a:0,b:.05,s:.01}];
+const H={temp:['Heizer und Raumtemperatur prüfen','Lüfter/Kühlung prüfen, Beleuchtungsdauer kürzen'],
+sal:['Salzgehalt langsam anheben (Salzwasser statt Osmosewasser nachfüllen)','Mit Osmosewasser auffüllen, Verdunstung ausgleichen'],
+ph:['Lüftung/CO₂ im Raum und KH prüfen','Kalkwasser-Dosierung und Gasaustausch prüfen'],
+kh:['KH langsam anheben (max. ca. 1 dKH pro Tag)','Dosierung reduzieren, Teilwasserwechsel'],
+ca:['Calcium nachdosieren, auf KH/Mg abstimmen','Dosierung pausieren'],
+mg:['Magnesium nachdosieren (stabilisiert Ca/KH)','Dosierung pausieren'],
+no3:['Zu wenig kann Korallen ausbleichen lassen – etwas mehr füttern','Wasserwechsel, weniger füttern, Abschäumer reinigen'],
+po4:['Zu wenig kann Algen/Dinos fördern – Futtermenge prüfen','Phosphatentferner, Wasserwechsel, weniger füttern'],
+no2:['','Filterbiologie prüfen, Wasserwechsel, vorerst nicht füttern'],nh4:['','Wasserwechsel, nicht füttern, Filterbiologie und Besatz prüfen']};
+const SL=['Im Zielbereich','Leicht abweichend','Kritisch'];
+const TECH=['Abschäumer','Strömungspumpe','Rücklaufpumpe','Beleuchtung','Heizer','Kühlung','Osmoseanlage','Dosierpumpe','Nachfüllautomat','Filter/Technikbecken','Sonstiges'];
+const $=i=>document.getElementById(i),e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const iso=d=>new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10),td=()=>iso(new Date());
+const fd=d=>d?d.split('-').reverse().join('.'):'';
+const st=(p,v)=>{if(v>=p.a&&v<=p.b)return 0;const t=(p.b-p.a)*.5;return v>=p.a-t&&v<=p.b+t?1:2};
+const dl=k=>Math.round((new Date(k.l)-new Date(td()))/864e5)+k.d;
+let S;try{S=JSON.parse(localStorage.getItem('mw'))}catch(x){}
+S=S||{tank:{},tech:[],w:[],t:[],k:[
+{id:1,n:'Wasserwechsel',d:14,l:td()},{id:2,n:'Wasserwerte testen',d:7,l:td()},{id:3,n:'Abschäumer reinigen',d:7,l:td()},
+{id:4,n:'Frontscheibe reinigen',d:3,l:td()},{id:5,n:'Filtermaterial/Vlies wechseln',d:14,l:td()},
+{id:6,n:'Strömungspumpen reinigen',d:30,l:td()},{id:7,n:'Osmosewasser-Vorrat prüfen',d:7,l:td()}],sel:'no3'};
+let T='ov',C1=0,C2=0;
+let ref=null,tm;
+const dbSave=()=>{if(!ref)return;clearTimeout(tm);tm=setTimeout(()=>ref.set({s:JSON.stringify(S)}).catch(()=>{}),600)};
+const save=()=>{try{localStorage.setItem('mw',JSON.stringify(S))}catch(x){}dbSave()};
+const go=t=>{if(t){if(t!=T&&window.scrollTo)scrollTo(0,0);T=t}applyT();save();$('nav').innerHTML=[['ov','🏠','Start'],['w','🧪','Werte'],['t','🐠','Tiere'],['k','✅','Aufgaben'],['m','☰','Mehr']].map(([k,i,n])=>`<button class="${k==(['ov','w','t','k'].includes(T)?T:'m')?'on':''}" onclick="go('${k}')"><span style="font-size:20px">${i}</span>${n}</button>`).join('');$('m').innerHTML=tkSel()+V[T]()};
+const sw=()=>[...S.w].sort((a,b)=>a.d==b.d?a.id-b.id:a.d<b.d?-1:1);
+const chip=(p,v)=>{const s=st(p,v);return `<span class="chip c${s}">${SL[s]}</span>`};
+const V={};
+V.ov=()=>{const w=sw(),l=w[w.length-1],tk=S.tank,live=S.t.filter(x=>!x.x);
+const fish=live.filter(x=>x.t=='Fisch').reduce((a,x)=>a+(+x.n||1),0),cor=live.filter(x=>x.t=='Koralle').length,inv=live.filter(x=>x.t=='Wirbellose').length;
+const due=S.k.filter(k=>dl(k)<=0),bad=l?P.filter(p=>l[p.k]!=null&&st(p,l[p.k])>0):[];
+return `<div class=card><h2>${e(tk.name||'Mein Becken')}</h2><div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">${live.filter(x=>x.t=='Fisch').map(x=>known(x)?img(known(x),40):'').join('')}</div><p class=mu>${tk.v?tk.v+' Liter · ':''}${fish} Fische · ${cor} Korallen · ${inv} Wirbellose${tk.s?' · läuft seit '+fd(tk.s):''}</p></div>`+
+coach()+warn()+extra()+(due.length?`<div class=card style="border-color:var(--er)"><h2>⏰ Fällig</h2>${due.map(k=>`<div class=row><span>${e(k.n)} <span class=mu>(${dl(k)<0?-dl(k)+' Tage überfällig':'heute'})</span></span><button class=s onclick="done(${k.id})">Erledigt</button></div>`).join('')}</div>`:'')+
+`<div class=card><h2>Aktuelle Werte ${l?'<span class=mu>vom '+fd(l.d)+'</span>':''}</h2>${l?`<div class=g>${P.filter(p=>l[p.k]!=null).map(p=>`<div class=v style="border-color:var(--${['ok','wa','er'][st(p,l[p.k])]})"><div class=mu>${p.n}</div><b>${l[p.k]} ${p.u}</b></div>`).join('')}</div>`:'<p class=mu>Noch keine Messwerte. Unter „Wasserwerte“ eintragen.</p>'}</div>`+
+(bad.length?`<div class=card><h2>Handlungsbedarf</h2>${bad.map(p=>{const v=l[p.k];return `<div class=row><div><b>${p.n}</b> ${v} ${p.u} ${chip(p,v)}<br><span class=mu>Soll ${p.a}–${p.b} ${p.u}. ${H[p.k][v<p.a?0:1]}</span></div></div>`}).join('')}</div>`:l?'<div class=card><h2>✅ Alle gemessenen Werte im Zielbereich</h2></div>':'');};
+V.w=()=>{const w=sw(),sel=P.find(p=>p.k==S.sel);
+const form=`<div class=card><h2>Messung eintragen</h2><p class=mu>${S.pro?'Profi-Modus: alle Werte.':'Nur die wichtigsten Werte. Du musst nicht alles messen.'} <a href="#" onclick="S.pro=!S.pro;go();return false" style="color:var(--ac)">${S.pro?'Weniger anzeigen':'Alle Werte anzeigen'}</a></p><div class=g><div><label>Datum</label><input type=date id=wd value="${td()}"></div>${P.filter(p=>S.pro||['temp','sal','ph','kh','no3','po4'].includes(p.k)).map(p=>`<div><label>${p.n} ${p.u}</label><input type=number inputmode=decimal step=${p.s} id=w_${p.k}></div>`).join('')}</div><label style="margin-top:8px">Notiz</label><input id=wn><button class=b onclick="addW()">Speichern</button></div>`;
+if(!w.length)return form;
+const rows=P.map(p=>{const v=w.filter(x=>x[p.k]!=null).map(x=>+x[p.k]);if(!v.length)return '';const c=v[v.length-1],pr=v[v.length-2],tr=pr==null?'–':c>pr?'↑':c<pr?'↓':'→';
+return `<tr><td>${p.n}</td><td><b>${c}</b> ${p.u}</td><td>${p.a}–${p.b}</td><td>${chip(p,c)}</td><td>${tr}</td><td>${(v.reduce((a,b)=>a+b,0)/v.length).toFixed(2)}</td><td>${Math.min(...v)}–${Math.max(...v)}</td><td>${Math.round(v.filter(x=>st(p,x)==0).length/v.length*100)} %</td></tr>`}).join('');
+const o=w.map((x,i)=>`<option value=${i}>${fd(x.d)}</option>`).join('');
+const a=w[C1]||w[0],b=w[C2]||w[w.length-1];
+return form+`<div class=card><h2>Auswertung</h2><div class=t><table><tr><th>Wert<th>Aktuell<th>Soll<th>Status<th>Trend<th>Ø<th>Min–Max<th>Im Soll</tr>${rows}</table></div></div>
+<div class=card><h2>Verlauf</h2><select onchange="S.sel=this.value;go()">${P.map(p=>`<option value=${p.k} ${p.k==S.sel?'selected':''}>${p.n}</option>`).join('')}</select> <select onchange="S.per=+this.value;go()">${[[0,'Alles'],[7,'7 Tage'],[30,'30 Tage'],[90,'90 Tage']].map(([v,n])=>`<option value=${v} ${(S.per||0)==v?'selected':''}>${n}</option>`).join('')}</select>${chart(sel,w)}</div>
+<div class=card><h2>Messungen vergleichen</h2><div class=g><select onchange="C1=+this.value;go()">${o.replace(`value=${C1}>`,`value=${C1} selected>`)}</select><select onchange="C2=+this.value;go()">${o.replace(`value=${w.indexOf(b)}>`,`value=${w.indexOf(b)} selected>`)}</select></div>
+<div class=t><table><tr><th>Wert<th>${fd(a.d)}<th>${fd(b.d)}<th>Differenz</tr>${P.filter(p=>a[p.k]!=null&&b[p.k]!=null).map(p=>`<tr><td>${p.n}<td class=x${st(p,a[p.k])}>${a[p.k]}<td class=x${st(p,b[p.k])}>${b[p.k]}<td>${(b[p.k]-a[p.k]>0?'+':'')+(b[p.k]-a[p.k]).toFixed(2)} ${p.u}</tr>`).join('')}</table></div></div>
+<div class=card><h2>Alle Messungen</h2><div class=t><table><tr><th>Datum${P.filter(p=>w.some(x=>x[p.k]!=null)).map(p=>'<th>'+p.n).join('')}<th></tr>${[...w].reverse().map(x=>`<tr><td>${fd(x.d)}${P.filter(p=>w.some(y=>y[p.k]!=null)).map(p=>`<td class="${x[p.k]!=null?'x'+st(p,x[p.k]):''}">${x[p.k]??''}`).join('')}<td><button class=s onclick="del('w',${x.id})">✕</button></tr>`).join('')}</table></div></div>
+<p class=mu>Richtwerte gelten für ein typisches Riffaquarium. Passe sie an dein Becken und deinen Besatz an.</p>`};
+function chart(p,w){const d=w.filter(x=>x[p.k]!=null&&(!S.per||dd(x.d,td())<=S.per)).slice(-60);if(d.length<2)return '<p class=mu>Für den Verlauf werden mindestens zwei Messwerte benötigt.</p>';
+const W=600,Hh=220,m=40,v=d.map(x=>+x[p.k]),lo=Math.min(p.a,...v),hi=Math.max(p.b,...v),pd=(hi-lo)*.15||1,y0=lo-pd,y1=hi+pd;
+const X=i=>m+i*(W-m-12)/(d.length-1),Y=z=>Hh-26-(z-y0)/(y1-y0)*(Hh-40);
+return `<svg viewBox="0 0 ${W} ${Hh}" width="100%"><rect x=${m} y=${Y(p.b)} width=${W-m-12} height=${Y(p.a)-Y(p.b)} fill="#1b9e5a" opacity=".15"/><text x=2 y=${Y(p.b)+4}>${p.b}</text><text x=2 y=${Y(p.a)+4}>${p.a}</text>
+<polyline fill=none stroke="#0a7ea4" stroke-width=2 points="${v.map((z,i)=>X(i)+','+Y(z)).join(' ')}"/>${v.map((z,i)=>`<circle cx=${X(i)} cy=${Y(z)} r=4 fill="${['#1b9e5a','#d99a00','#d64545'][st(p,z)]}"><title>${fd(d[i].d)}: ${z} ${p.u}</title></circle>`).join('')}
+<text x=${m} y=${Hh-6}>${fd(d[0].d)}</text><text x=${W-12} y=${Hh-6} text-anchor=end>${fd(d[d.length-1].d)}</text></svg><p class=mu>Grüner Bereich = Sollwert (${p.a}–${p.b} ${p.u})</p>`}
+function addW(){const o={id:Date.now(),d:$('wd').value||td(),n:$('wn').value};P.forEach(p=>{const v=($('w_'+p.k)||{}).value;if(v!==''&&v!=null)o[p.k]=+v});
+if(P.every(p=>o[p.k]==null)){alert('Bitte mindestens einen Wert eintragen.');return}S.w.push(o);C1=0;C2=S.w.length-1;go()}
+V.t=()=>{const L=S.t,cost=L.reduce((a,x)=>a+(x.p||0)*(+x.c||1),0);return `<div class=card><h2>Tier hinzufügen</h2>${cost?'<p class=mu>Gesamtkosten Besatz: '+cost.toFixed(2)+' €</p>':''}<div class=g><div><label>Typ</label><select id=tt><option>Fisch<option>Koralle<option>Wirbellose</select></div><div><label>Name / Art</label><input id=tn list=fl placeholder="z. B. Clownfisch"><datalist id=fl>${FISH.map(f=>`<option value="${f[0]}">`).join('')}</datalist></div><div><label>Anzahl</label><input type=number id=tc value=1 min=1></div><div><label>Eingesetzt am</label><input type=date id=td value="${td()}"></div><div><label>Preis pro Tier (€)</label><input type=number step=.01 id=tp></div><div><label>Händler</label><input id=th></div><div><label>Geschlecht</label><select id=tg><option value="">–<option>♂<option>♀</select></div></div><label style="margin-top:8px">Herkunft / Notizen</label><input id=to><button class=b onclick="addT()">Hinzufügen</button></div>`+
+['Fisch','Koralle','Wirbellose'].map(t=>{const l=L.filter(x=>x.t==t);return `<div class=card><h2>${{Fisch:'🐟 Fische',Koralle:'🪸 Korallen',Wirbellose:'🦐 Wirbellose'}[t]} (${l.filter(x=>!x.x).length})</h2>${l.length?l.map(x=>`<div class=row style="${x.x?'opacity:.55':''}"><div><b>${e(x.n)}</b> × ${x.c}<br><span class=mu>seit ${fd(x.d)}${x.g?' · '+x.g:''}${x.p?' · '+x.p+' €':''}${x.h?' · '+e(x.h):''}${x.x?' · verstorben '+fd(x.x):''}${x.o?' · '+e(x.o):''}</span></div><div><button class=s onclick="dead(${x.id})">${x.x?'↺':'†'}</button> <button class=s onclick="del('t',${x.id})">✕</button></div></div>`).join(''):'<p class=mu>Noch keine Einträge.</p>'}</div>`}).join('')};
+function addT(){if(!$('tn').value.trim()){alert('Bitte einen Namen eintragen.');return}S.t.push({id:Date.now(),t:$('tt').value,n:$('tn').value.trim(),c:+$('tc').value||1,d:$('td').value,o:$('to').value,p:+$('tp').value||0,h:$('th').value,g:$('tg').value});go()}
+function dead(id){const x=S.t.find(i=>i.id==id);x.x=x.x?null:td();go()}
+V.b=()=>{const k=S.tank;const f=(id,l,t='text')=>`<div><label>${l}</label><input id=k_${id} type=${t} ${t=='number'?'step=any inputmode=decimal':''} value="${e(k[id])}" oninput="vcalc(event)"></div>`;
+return `<div class=card><h2>Aquarium</h2><div class=g>${f('name','Name')}${f('v','Nettovolumen (Liter)','number')}${f('lg','Länge (cm)','number')}${f('br','Breite (cm)','number')}${f('h','Höhe (cm)','number')}${f('glas','Glasstärke (mm)','number')}${f('gap','Abstand Wasser bis Oberkante (cm)','number')}${f('einr','Gestein und Sand (% vom Volumen, z. B. 15)','number')}${f('sump','Technikbecken (Liter)','number')}${f('s','Gestartet am','date')}${f('salz','Salzmarke')}${f('album','Foto-Album (Link)')}</div><div id=vres style="margin-top:10px"></div>${(setTimeout(vcalc),'')}<button class=b onclick="saveK()">Speichern</button></div>
+<div class=card><h2>Technik hinzufügen</h2><div class=g><div><label>Kategorie</label><select id=hc>${TECH.map(t=>`<option>${t}`).join('')}</select></div><div><label>Bezeichnung / Modell</label><input id=hn></div><div><label>Notiz (z. B. Leistung)</label><input id=ho></div></div><button class=b onclick="addH()">Hinzufügen</button></div>
+<div class=card><h2>Technik</h2>${S.tech.length?S.tech.map(x=>`<div class=row><div><b>${x.c}</b>: ${e(x.n)}<br><span class=mu>${e(x.o)}</span></div><button class=s onclick="del('tech',${x.id})">✕</button></div>`).join(''):'<p class=mu>Noch keine Technik eingetragen.</p>'}</div>${TE()}`};
+/* Dosier-Rechner: Erhöhung pro 1 g Reinsubstanz auf 100 Liter (aus der Chemie berechnet) */
+const DS={kh:{n:'Karbonathärte (KH)',u:'dKH',max:1,P:[['Natron (Natriumhydrogencarbonat)',.333],['Soda (Natriumcarbonat, wasserfrei)',.53]]},ca:{n:'Calcium',u:'mg/l',max:20,P:[['Calciumchlorid-Dihydrat',2.73]]},mg:{n:'Magnesium',u:'mg/l',max:50,P:[['Magnesiumchlorid-Hexahydrat',1.196]]}};
+const DR=()=>{const v=+S.tank.v||'',i=(id,l,val='')=>`<div><label>${l}</label><input id="d_${id}" type=number step=any inputmode=decimal value="${val}" oninput="dcalc()"></div>`;
+return `<div class=card><h2>💊 Dosier-Rechner</h2><div class=g><div><label>Wert</label><select id=d_p onchange="dfill()">${Object.keys(DS).map(k=>`<option value=${k}>${DS[k].n}</option>`).join('')}</select></div><div><label>Produkt</label><select id=d_s onchange="dcalc()"></select></div>${i('i','Ist-Wert')}${i('z','Ziel-Wert')}${i('v','Volumen (L)',v)}</div>
+<div id=d_h class=g style="display:none;margin-top:8px">${i('x','Menge laut Hersteller')}${i('y','erhöht um … pro 100 L')}</div><div id=d_o style="margin-top:10px"></div>
+<p class=mu>Die Mengen sind aus der Chemie der Reinsubstanz berechnet (nicht für fertige Mischungen oder Fertigprodukte). Bei einem eigenen Produkt gibst du die Herstellerangabe ein. Salze vorher in Osmosewasser auflösen und langsam in der Strömung zugeben. KH- und Calciumlösung nicht an derselben Stelle gleichzeitig einfüllen. Soda hebt den pH-Wert stark an. Nach der Zugabe nachmessen und lieber in kleinen Schritten vorgehen.</p></div>`};
+function dfill(){const k=$('d_p').value,D=DS[k],p=P.find(q=>q.k==k),l=sw().filter(x=>x[k]!=null).pop();
+$('d_s').innerHTML=D.P.map((x,i)=>`<option value=${i}>${x[0]}</option>`).join('')+'<option value=-1>Eigenes Produkt (Herstellerangabe)</option>';
+$('d_i').value=l?l[k]:'';$('d_z').value=+(p.a+(p.b-p.a)/2).toFixed(2);dcalc()}
+function dcalc(){const k=$('d_p').value,D=DS[k],si=+$('d_s').value,g=id=>parseFloat($('d_'+id).value),ist=g('i'),zi=g('z'),v=g('v');$('d_h').style.display=si<0?'grid':'none';let o='';
+if(ist>=0&&zi>ist&&v>0){const dl2=zi-ist;let amt,unit,name='';
+if(si>=0){amt=dl2/D.P[si][1]*v/100;unit='g';name=D.P[si][0]}else{const x=g('x'),y=g('y');if(!(x>0&&y>0)){$('d_o').innerHTML='Trage die Herstellerangabe ein.';return}amt=dl2/y*x*v/100;unit='(Einheit laut Hersteller)'}
+const days=Math.max(1,Math.ceil(dl2/D.max)),per=amt/days;
+o=`Erhöhung um <b>${dl2.toFixed(1)} ${D.u}</b> braucht insgesamt <b>${amt.toFixed(1)} ${unit}</b> ${name}.<br>Sicher verteilt über mindestens <b>${days} Tag${days>1?'e':''}</b> (höchstens ${D.max} ${D.u} pro Tag): täglich etwa <b>${per.toFixed(1)} ${unit}</b>.`}
+else if(zi>0&&zi<=ist)o='Der Zielwert liegt nicht über dem Ist-Wert, es muss nichts zugegeben werden.';else o='Trage Ist-Wert, Ziel-Wert und Volumen ein.';
+$('d_o').innerHTML=o}
+function TE(){const v=+S.tank.v||0,sp=+S.tank.sump||0,typ=S.tank.typ||'lps',tot=v+sp;
+const T={fisch:[0,10,20,'50–150',8],lps:[0,20,30,'100–200',9],sps:[0,30,50,'200–350',10]}[typ];
+const sel=`<select onchange="S.tank.typ=this.value;go()">${[['fisch','Fische und Weichkorallen'],['lps','Weich- und LPS-Korallen'],['sps','SPS-Riff (anspruchsvoll)']].map(([k,n])=>`<option value=${k} ${k==typ?'selected':''}>${n}</option>`).join('')}</select>`;
+if(!v)return `<div class=card><h2>⚙️ Technik-Empfehlung</h2><p class=mu>Trage oben die Beckenmaße oder das Nettovolumen ein, dann erscheinen die Empfehlungen.</p></div>`;
+const has=c=>S.tech.some(x=>x.c==c),r=(a,b)=>Math.round(a)+'–'+Math.round(b);
+const chk=['Abschäumer','Strömungspumpe','Rücklaufpumpe','Beleuchtung','Heizer','Osmoseanlage','Nachfüllautomat'].map(c=>`<div class=row><span>${c}</span><span class="x${has(c)?0:2}">${has(c)?'✔ eingetragen':'✖ noch nicht eingetragen'}</span></div>`).join('');
+const R=(h,t)=>`<div class=row><div><b>${h}</b><br><span class=mu>${t}</span></div></div>`;
+return `<div class=card><h2>⚙️ Technik-Empfehlung für ${v} Liter</h2><label>Was möchtest du halten?</label>${sel}`+
+R('💡 Beleuchtung',`Etwa ${T[3]} PAR im Besatzbereich, ${T[4]} bis ${T[4]+1} Stunden pro Tag, morgens und abends langsam hoch- und herunterdimmen. Dimmbare LED mit Blau- und Weißanteil; die Leistung hängt stark vom Modell ab, deshalb auf PAR-Angaben achten.`)+
+R('🌊 Strömung',`Gesamtumwälzung ${T[1]}- bis ${T[2]}-fach pro Stunde, also etwa ${r(v*T[1],v*T[2])} L/h. Lieber mehrere Pumpen mit wechselnder Richtung als eine starke.`)+
+R('🔁 Rücklaufpumpe',`Tatsächlicher Durchfluss mindestens 3- bis 5-fach pro Stunde, etwa ${r(v*3,v*5)} L/h. Wegen der Förderhöhe eine Pumpe mit etwa dem doppelten Nennwert wählen (ca. ${r(v*6,v*10)} L/h).`)+
+R('🫧 Abschäumer',`Ausgelegt für etwa das 1,5- bis 2-fache deines Gesamtvolumens: ca. ${r(tot*1.5,tot*2)} Liter laut Herstellerangabe. Bei vielen Fischen oder reichlich Futter eher am oberen Wert.`)+
+R('🔥 Heizung',`Faustwert 0,5 bis 1 Watt pro Liter, also etwa ${r(v*.5,v)} Watt. Besser zwei kleinere Heizer mit Thermostat und zusätzlichem Temperaturalarm.`)+
+R('❄️ Kühlung','Nötig bei Raumtemperaturen über etwa 27 °C oder starker Beleuchtung: Lüfter oder Kühler mit Controller.')+
+R('💧 Osmose und Nachfüllung',`Verdunstung grob 0,5 bis 1,5 % pro Tag, also etwa ${r(v*.005,v*.015)} L. Vorratsbehälter für 3 bis 4 Tage: ca. ${r(v*.015,v*.06)} L.`)+
+R('🧰 Technikbecken und Gestein',`Technikbecken etwa 20 bis 30 % des Beckeninhalts (${r(v*.2,v*.3)} L). Lebendgestein grob 1 bis 1,5 kg pro 10 Liter (${r(v*.1,v*.15)} kg).`)+
+R('📏 Messen','Refraktometer, Testkits für KH, Calcium, Magnesium, Nitrat und Phosphat, Thermometer mit Alarm.')+
+`<p class=mu>Faustwerte aus Herstellerangaben und Ratgebern. Maßgeblich bleiben die Angaben des Geräteherstellers und die Bedürfnisse deiner Tiere.</p></div><div class=card><h2>Technik-Check</h2>${chk}</div>`}
+function vcalc(ev){const g=i=>parseFloat($('k_'+i).value),id=ev&&ev.target?ev.target.id:'';
+const L=g('lg'),B=g('br'),H=g('h'),gl=(g('glas')||0)/10,gap=isNaN(g('gap'))?3:g('gap'),ei=g('einr')||0;let t='';
+if(L>0&&B>0&&H>0){const br=L*B*H/1000,wa=Math.max(0,(L-2*gl)*(B-2*gl)*(H-gl-gap))/1000,net=wa*(1-ei/100);
+if(['k_lg','k_br','k_h','k_glas','k_gap','k_einr'].includes(id))$('k_v').value=Math.round(net);
+t=`Bruttovolumen (Außenmaße): <b>${Math.round(br)} L</b><br>Wasser im Becken: <b>${Math.round(wa)} L</b><br>Nach Abzug von Gestein und Sand: <b>${Math.round(net)} L</b>`}
+const v=g('v'),s=g('sump')||0;if(v>0)t+=(t?'<br>':'')+`Gesamtvolumen mit Technikbecken: <b>${Math.round(v+s)} L</b>`;
+$('vres').innerHTML=t||'Trage Länge, Breite und Höhe ein, dann wird das Volumen berechnet.'}
+function saveK(){['name','v','lg','br','h','glas','gap','einr','sump','s','salz','album'].forEach(i=>S.tank[i]=$('k_'+i).value);go()}
+function addH(){if(!$('hn').value.trim()){alert('Bitte eine Bezeichnung eintragen.');return}S.tech.push({id:Date.now(),c:$('hc').value,n:$('hn').value.trim(),o:$('ho').value});go()}
+V.k=()=>{const l=[...S.k].sort((a,b)=>dl(a)-dl(b));return `<div class=card><h2>Wasserwechsel &amp; Pflege</h2>${l.map(k=>{const d=dl(k);return `<div class=row><div><b>${e(k.n)}</b><br><span class="${d<0?'x2':d==0?'x1':'mu'}">${d<0?-d+' Tage überfällig':d==0?'Heute fällig':'in '+d+' Tagen'}</span> <span class=mu>· ${k.once?'einmalig, angelegt '+fd(k.l):'alle '+k.d+' Tage · zuletzt '+fd(k.l)}</span></div><div><button class=s onclick="done(${k.id})">Erledigt</button> <button class=s onclick="del('k',${k.id})">✕</button></div></div>`}).join('')}</div>
+${doneCard()}<div class=card><h2>Neue Aufgabe</h2><div class=g><div><label>Bezeichnung</label><input id=kn></div><div><label>Intervall bzw. fällig in (Tage)</label><input type=number id=kd value=7 min=1></div><div style="display:flex;align-items:end"><label style="display:flex;gap:6px;align-items:center;color:var(--tx);font-size:14px"><input type=checkbox id=ko style="width:auto"> Einmalige Aufgabe</label></div></div><button class=b onclick="addK()">Hinzufügen</button></div>
+<div class=card><h2>Benachrichtigungen</h2><p class=mu>Der Browser erinnert dich an fällige Aufgaben, solange diese Seite geöffnet ist. Zusätzlich siehst du fällige Aufgaben immer in der Übersicht.</p><button class=b onclick="notif()">Benachrichtigungen aktivieren</button></div>`};
+function done(id){const k=S.k.find(x=>x.id==id);if(!k)return;(S.kd=S.kd||[]).push({id:Date.now(),n:k.n,d:td()});if(k.once)S.k=S.k.filter(x=>x.id!=id);else k.l=td();go()}
+const doneCard=()=>{const L=[...(S.kd||[])].reverse();return `<div class=card><h2>✅ Erledigt${L.length?' ('+L.length+')':''}</h2>${L.length?L.slice(0,50).map(x=>`<div class=row><span>${e(x.n)} <span class=mu>· ${fd(x.d)}</span></span><button class=s onclick="delD(${x.id})">✕</button></div>`).join('')+'<button class=s style="margin-top:10px" onclick="clrD()">Alle erledigten löschen</button>':'<p class=mu>Noch nichts erledigt. Erledigte Aufgaben erscheinen hier und lassen sich löschen.</p>'}</div>`};
+function delD(id){S.kd=S.kd.filter(x=>x.id!=id);go()}
+function clrD(){if(confirm('Alle erledigten Aufgaben löschen?')){S.kd=[];go()}}
+function addK(){if(!$('kn').value.trim())return;S.k.push({id:Date.now(),n:$('kn').value.trim(),d:+$('kd').value||7,l:td(),once:$('ko').checked});go()}
+function notif(){if(!('Notification' in window)){alert('Dein Browser unterstützt keine Benachrichtigungen.');return}Notification.requestPermission().then(chk)}
+function chk(){const d=S.k.filter(k=>dl(k)<=0);if('Notification' in window&&Notification.permission=='granted'&&d.length)new Notification('Meerwasser-Logbuch',{body:'Fällig: '+d.map(k=>k.n).join(', ')})}
+V.d=()=>`<div class=card><h2>Datensicherung</h2><p class=mu>Alle Daten liegen nur in diesem Browser. Sichere sie regelmäßig als Datei.</p><button class=b onclick="exp()">Daten exportieren</button> <button class=b onclick="$('imp').click()">Daten importieren</button><input type=file id=imp accept=".json" hidden onchange="imp(this.files[0])"></div><div class=card><h2>Zurücksetzen</h2><button class=b style="background:var(--er)" onclick="resetAll()">Alle Daten löschen</button></div>`;
+async function exp(){const n='meerwasser-backup-'+td()+'.json',j=JSON.stringify(S);let d=null;try{d=window.claude&&await claude.use('downloads')}catch(x){}
+if(d){try{await d.save({filename:n,data:j})}catch(x){if(!x||x.code!='declined')alert('Export nicht möglich.')}return}
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([j],{type:'application/json'}));a.download=n;a.click()}
+function imp(f){if(!f)return;f.text().then(t=>{try{S=JSON.parse(t);go('ov')}catch(x){alert('Datei konnte nicht gelesen werden.')}})}
+function del(k,id){if(!confirm('Eintrag löschen?'))return;S[k]=S[k].filter(x=>x.id!=id);go()}
+/* Name, Mindestvolumen (L), Endgröße (cm), Temperament 0-2, Riffsicher 0-2, Gruppe, Hinweis */
+const FISH=[
+['Ocellaris-Clownfisch',100,8,1,0,'clown','Am besten als Paar halten; eine Anemone ist nicht zwingend nötig.'],
+['Grüner Chromis',200,8,0,0,'chromis','Schwarmfisch: mindestens 5–6 Tiere, braucht Platz zum Schwimmen.'],
+['Blauer Riffbarsch',100,8,2,0,'damsel','Sehr revierbezogen und aggressiv, besonders im Alter.'],
+['Dreipunkt-Preußenfisch',300,12,2,0,'damsel','Wird mit der Zeit sehr aggressiv.'],
+['Orchideen-Zwergbarsch',100,7,1,0,'dotty','Braucht Verstecke; verträgt keine Artgenossen oder ähnliche Zwergbarsche.'],
+['Yasha-Grundel',60,6,0,0,'goby','Lebt oft in Symbiose mit einer Knallkrebs-Garnele; Abdeckung nötig (Springer).'],
+['Feuer-Schwertgrundel',120,9,0,0,'dart','Springt gern: Becken unbedingt abdecken; ruhige Mitbewohner wählen.'],
+['Gelber Segelflossendoktor',400,20,1,0,'tang','Braucht viel Schwimmraum und Algenfutter; nicht mit anderen Doktorfischen mischen.'],
+['Paletten-Doktorfisch',500,30,0,0,'tang','Wird groß, braucht viel Schwimmraum; anfällig für Weißpünktchen.'],
+['Weißkehl-Doktorfisch',700,23,2,0,'tang','Sehr aggressiv gegenüber Artgenossen und anderen Doktorfischen.'],
+['Goldener Zwerglippfisch',200,12,0,0,'wrasse','Braucht feinen Sand zum Eingraben; Becken abdecken.'],
+['Sechsstreifen-Lippfisch',100,10,1,0,'sixline','Frisst Flatwürmer; kann gegenüber ähnlichen Fischen aggressiv sein.'],
+['Kardinalbarsch',100,8,0,0,'cardinal','Maulbrüter; am besten als Paar oder Gruppe nachgezüchteter Tiere.'],
+['Mandarinfisch',200,7,0,0,'dragonet','Nur in reifen Becken mit vielen Kleinkrebsen; Futterumstellung schwierig.'],
+['Seepferdchen',200,15,0,0,'seahorse','Spezialfutter, ruhige Strömung, keine aggressiven oder schnellen Mitbewohner.'],
+['Zweifarbiger Zwergkaiserfisch',300,15,1,1,'angel','Kann an Steinkorallen (LPS) und Muscheln knabbern.'],
+['Flammen-Zwergkaiserfisch',250,10,1,1,'angel','Knabbert gelegentlich an Weichkorallen und Muscheln.'],
+['Imperator-Kaiserfisch',1500,40,2,2,'angel','Nur für sehr große Becken, frisst Korallen und Schwämme.'],
+['Pinzettfisch',300,20,0,1,'butterfly','Hilft gegen Glasrosen, frisst aber auch Röhrenwürmer und manchmal Korallen.'],
+['Picasso-Drückerfisch',500,25,2,2,'trigger','Frisst Krebse, Garnelen und Muscheln; sehr aggressiv.'],
+['Pazifischer Rotfeuerfisch',500,35,2,2,'lion','Frisst kleinere Fische und Garnelen.'],
+['Zwergfeenbarsch',400,12,1,0,'anthias','In Gruppe halten und mehrmals täglich füttern.'],
+['Gelbstreifen-Falkenfisch',150,7,1,1,'hawk','Frisst kleine Garnelen und Einsiedler; ruht auf Steinen.'],
+['Algenschleimfisch',200,14,1,0,'blenny','Frisst Algen; kann untereinander revierbezogen sein.'],
+['Zweifarbiger Schleimfisch',100,10,0,0,'blenny','Friedlich, frisst Algen; springt gern.'],
+['Königs-Gramma',100,8,1,0,'gramma','Braucht Höhlen und Verstecke; gegenüber Artgenossen revierbezogen.']
+,
+['Stachel-Anemonenfisch',200,14,2,0,'clown','Wird groß und dominant; als Paar in größeren Becken, nicht mit anderen Anemonenfischen mischen.'],
+['Azurblauer Riffbarsch',100,6,1,0,'damsel','Kleinere, meist verträglichere Riffbarschart; Reviere trotzdem beachten.'],
+['Purpur-Doktorfisch',400,25,1,0,'tang','Braucht Schwimmraum und Algenfutter; am besten nur ein Doktorfisch pro Becken.'],
+['Schlafgrundel',200,15,1,0,'goby','Siebt Sand; braucht feinen Sandboden und genügend Futter.'],
+['Feenlippfisch',200,9,0,0,'wrasse','Springt gern, Becken abdecken; Männchen untereinander revierbezogen.'],
+['Zwerg-Rotfeuerfisch',250,15,2,1,'lion','Frisst kleine Fische und Garnelen; giftige Stacheln beachten.'],
+['Säbelzahn-Schleimfisch',100,8,1,0,'blenny','Kann Mitbewohner mit seinen Giftzähnen beißen; ruhige Mitbewohner wählen.'],
+['Pyjama-Kardinalbarsch',150,8,0,0,'cardinal','Nachtaktiv; in kleiner Gruppe halten.'],
+['Midnight-Zwergkaiserfisch',250,8,1,1,'angel','Kann an Steinkorallen und Muscheln knabbern.'],
+['Percula-Clownfisch',100,8,1,0,'clown','Wie der Ocellaris am besten als Paar; ruhiger als viele andere Arten.'],
+['Neon-Grundel',60,5,0,0,'goby','Putzerfisch, der Parasiten von anderen Fischen frisst; friedlich, für kleine Becken.'],
+['Gelber Zwergkaiserfisch',300,14,1,1,'angel','Kann an Steinkorallen und Muscheln knabbern; braucht Verstecke und Algenfutter.'],
+['Gelbschwanz-Riffbarsch',100,6,1,0,'damsel','Eine der friedlicheren Riffbarscharten, aber trotzdem revierbezogen.'],
+['Segelflossendoktor',500,40,1,0,'tang','Wird sehr groß und braucht viel Schwimmraum und Algenfutter.']
+].sort((a,b)=>a[0].localeCompare(b[0],'de'));
+const TMP=['friedlich','bedingt verträglich','aggressiv'],RS=['riffsicher','bedingt riffsicher','nicht riffsicher'],TERR=['tang','dotty','angel','damsel','sixline','hawk','blenny','gramma'];
+let FI=0,LS='f',LQ='',CMP=[];
+/* Farbe 1, Farbe 2, Form (0 normal, 1 hoch, 2 schlank, 4 Seepferdchen), Muster */
+const GC={clown:['#ff7a1a','#ffffff',0,'bands'],chromis:['#2fd0c4','#1b6fd1',0,'plain'],damsel:['#1f6fe0','#ffd23f',0,'plain'],dotty:['#b03bd9','#ff7ad9',2,'plain'],goby:['#ffd23f','#ffffff',2,'bands'],dart:['#ff5d73','#ffffff',2,'plain'],tang:['#2d7ff9','#ffd23f',1,'plain'],wrasse:['#ffb347','#2fd0c4',2,'stripe'],sixline:['#ff8a3d','#2d7ff9',2,'stripe'],cardinal:['#e8e8f0','#222233',0,'bands'],dragonet:['#2fd0c4','#ff7a1a',2,'dots'],seahorse:['#ffcf40','#ff8a3d',4,'plain'],angel:['#ffb000','#2d7ff9',1,'plain'],butterfly:['#ffffff','#ffd23f',1,'bands'],trigger:['#7a8b3c','#ffd23f',0,'dots'],lion:['#c0392b','#ffffff',0,'bands'],anthias:['#ff6fa5','#ffd23f',0,'plain'],hawk:['#ff5d73','#ffffff',2,'dots'],blenny:['#7ad97a','#1b6fd1',2,'plain'],gramma:['#8e44ad','#ffd23f',2,'plain']};
+const OV={'Gelber Segelflossendoktor':['#ffdd2d','#ffffff',1,'plain'],'Weißkehl-Doktorfisch':['#1d4fd8','#ffffff',1,'plain'],'Imperator-Kaiserfisch':['#1d4fd8','#ffd23f',1,'stripe'],'Grüner Chromis':['#5be0b0','#2fd0c4',0,'plain']};
+/* Mehrere Becken */
+const nm=s=>s.tank&&s.tank.name||'Becken',snap=()=>{const o={...S};delete o.x;return o};
+const fresh=n=>({tank:{name:n},tech:[],w:[],t:[],k:[{id:1,n:'Wasserwechsel',d:14,l:td()},{id:2,n:'Wasserwerte testen',d:7,l:td()},{id:3,n:'Abschäumer reinigen',d:7,l:td()},{id:4,n:'Frontscheibe reinigen',d:3,l:td()}],sel:'no3'});
+const tkSel=()=>`<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span>🐠</span><select onchange="tsw(this.value)"><option value=cur>${e(nm(S))}</option>${(S.x||[]).map((x,i)=>`<option value=${i}>${e(nm(x.s))}</option>`).join('')}<option value=new>＋ Neues Becken anlegen</option></select></div>`;
+function tsw(v){if(v=='cur')return;const x=S.x||[];if(v=='new'){const n=prompt('Name des neuen Beckens:');if(!n){go();return}x.push({s:snap()});S={...fresh(n),x};go();return}
+const i=+v,t=x[i].s;x[i]={s:snap()};S={...t,x};go()}
+/* Einfahr-Coach und Warnungen */
+const LIM={temp:1.5,kh:1.5,ph:.3,sal:1,ca:40,mg:100},dd=(a,b)=>Math.max(1,Math.round((new Date(b)-new Date(a))/864e5));
+const coach=()=>{const k=S.tank.s;if(!k)return '';const age=Math.round((new Date(td())-new Date(k))/864e5);if(age>90||age<0)return '';
+const w=sw().filter(x=>x.nh4!=null||x.no2!=null),l=w[w.length-1],hi=l&&(l.nh4>.1||l.no2>.1),lo=w.slice(-2).length==2&&w.slice(-2).every(x=>!(x.nh4>.05)&&!(x.no2>.05));
+const [s,m]=!l?[1,'Miss Ammonium und Nitrit regelmäßig, um die Einlaufphase zu beurteilen.']:hi?[2,'Noch nicht besetzen: Ammonium oder Nitrit sind zu hoch, die Biologie läuft noch ein.']:lo&&age>=14?[0,'Die Biologie wirkt eingelaufen. Erste robuste Fische können langsam und einzeln einziehen, mit Pausen dazwischen.']:[1,'Die Werte sinken. Warte auf mindestens zwei niedrige Messungen nacheinander und auf mehr Einlaufzeit.'];
+return `<div class=card><h2>🧪 Einfahr-Coach <span class="chip c${s}">${['Besatz möglich','Abwarten','Noch nicht besetzen'][s]}</span></h2><p>${m}</p><p class=mu>Becken seit ${age} Tagen. Nur eine grobe Orientierung.</p></div>`};
+const warn=()=>{const o=[];P.forEach(p=>{if(!LIM[p.k])return;const w=sw().filter(x=>x[p.k]!=null).slice(-2);if(w.length<2)return;const c=(w[1][p.k]-w[0][p.k])/dd(w[0].d,w[1].d);if(Math.abs(c)>LIM[p.k])o.push(`${p.n}: ${c>0?'+':''}${c.toFixed(2)} ${p.u} pro Tag`)});
+return o.length?`<div class=card style="border-color:var(--wa)"><h2>⚠️ Starke Schwankungen</h2>${o.map(x=>'<p>'+x+'</p>').join('')}<p class=mu>Große Schwankungen stressen Tiere. Ursache prüfen und Werte nur langsam korrigieren.</p></div>`:''};
+/* Pflege & Tools */
+let PS='r';
+const LD={dos:{n:'Dosierung',f:[['d','Datum','date'],['a','Produkt'],['m','Menge'],['o','Notiz']]},fut:{n:'Futterplan',f:[['a','Futter'],['m','Menge'],['t','Zeit / Tage'],['o','Für welche Tiere']]},med:{n:'Krankheit & Quarantäne',f:[['d','Datum','date'],['a','Tier'],['m','Problem / Behandlung'],['o','Dauer / Notiz']]},log:{n:'Tagebuch',f:[['d','Datum','date'],['a','Beobachtung']]},icp:{n:'ICP- und Labortests',f:[['d','Datum','date'],['a','Labor / Anbieter'],['o','Ergebnis / Auffälligkeiten']]},wish:{n:'Wunschliste',f:[['a','Tier / Art'],['m','Preis (€)'],['o','Notiz']]}};
+function ladd(k){const o={id:Date.now()};LD[k].f.forEach(([a])=>o[a]=$('l_'+k+'_'+a).value);if(!o.a&&!o.m&&!o.o)return;(S[k]=S[k]||[]).push(o);go()}
+function ldel(k,id){S[k]=S[k].filter(x=>x.id!=id);go()}
+const lst=k=>{const d=LD[k],L=[...(S[k]||[])].reverse();
+return `<div class=card><h2>${d.n}</h2><div class=g>${d.f.map(([a,l,t])=>`<div><label>${l}</label><input id="l_${k}_${a}" type="${t||'text'}" ${t=='date'?'value="'+td()+'"':''}></div>`).join('')}</div><button class=b onclick="ladd('${k}')">Hinzufügen</button></div><div class=card>${L.length?L.map(x=>{const f=k=='wish'&&known({n:x.a||''});return `<div class=row><div>${d.f.map(([a,l,t])=>x[a]?(t=='date'?fd(x[a]):e(x[a])):'').filter(Boolean).join(' · ')}</div><div>${f?`<button class=s onclick="FI=${FISH.indexOf(f)};go('f')">Check</button> `:''}<button class=s onclick="ldel('${k}',${x.id})">✕</button></div></div>`}).join(''):'<p class=mu>Noch keine Einträge.</p>'}</div>`};
+const RC=()=>{const v=+S.tank.v||'',i=(id,l,val='')=>`<div><label>${l}</label><input id="r_${id}" type=number step=any inputmode=decimal value="${val}" oninput="calc()"></div>`;
+return `<div class=card><h2>Wasserwechsel</h2><div class=g>${i('wv','Beckenvolumen (L)',v)}${i('wp','Wechsel (%)',10)}</div><p id=o_w></p></div>
+${saltCard(v)}
+<div class=card><h2>Dichte → Salinität</h2><div class=g>${i('dd','Dichte',1.025)}</div><p id=o_d></p></div>
+<div class=card><h2>Zugabe berechnen</h2><div class=g>${i('zi','Ist-Wert')}${i('zz','Ziel-Wert')}${i('zx','Menge laut Hersteller')}${i('zy','erhöht um … pro 100 L')}${i('zv','Volumen (L)',v)}</div><p id=o_z></p><p class=mu>Beispiel: „1 ml erhöht Calcium um 10 mg/l pro 100 L“ → Menge 1, erhöht um 10. In kleinen Schritten über mehrere Tage zugeben.</p></div>
+<div class=card><h2>Verbrauch aus deinen Messungen</h2><select id=r_vp onchange="calc()">${['kh','ca','mg','no3','po4'].map(k=>`<option value=${k}>${P.find(p=>p.k==k).n}</option>`).join('')}</select><p id=o_v></p></div>`};
+function calc(){const g=id=>parseFloat($('r_'+id).value),t=(id,h)=>{$(id).innerHTML=h};
+const wv=g('wv'),wp=g('wp');t('o_w',wv>0&&wp>0?`<b>${(wv*wp/100).toFixed(1)} L</b> tauschen`:'');
+const sl=g('sl'),ss=g('ss'),sg=g('sg');t('o_s',sl>0&&ss>0&&sg>0?`<b>${Math.round(sl*sg/35*ss)} g</b> Salz für ${sl} L Wasser (Ziel ${ss} ppt)`:'Trage Wassermenge, Ziel-Salinität und die Salzmenge ein.');saltSave(sg);
+const d=g('dd');t('o_d',d>0?`ca. <b>${((d-1)*1326).toFixed(1)} ppt</b> bei 25 °C`:'');
+const zi=g('zi'),zz=g('zz'),zx=g('zx'),zy=g('zy'),zv=g('zv');t('o_z',zy>0&&zx>0&&zv>0&&zz>zi?`<b>${((zz-zi)/zy*zx*zv/100).toFixed(1)}</b> in der Einheit des Herstellers`:'');
+const k=$('r_vp').value,w=sw().filter(x=>x[k]!=null).slice(-2);
+t('o_v',w.length<2?'Mindestens zwei Messungen nötig.':(()=>{const c=(w[1][k]-w[0][k])/dd(w[0].d,w[1].d);return `Änderung: <b>${c.toFixed(2)} pro Tag</b> (${(c*7).toFixed(2)} pro Woche) zwischen ${fd(w[0].d)} und ${fd(w[1].d)}.`})())}
+V.p=()=>`<div class=card><div class=g style="grid-template-columns:repeat(3,1fr)">${[['r','Rechner'],['dos','Dosierung'],['fut','Futter'],['med','Krank / Quarantäne'],['log','Tagebuch'],['icp','Labortests'],['wish','Wunschliste']].map(([k,n])=>`<button class="${PS==k?'b':'s'}" style="margin:0;padding:8px;font-size:13px" onclick="PS='${k}';go()">${n}</button>`).join('')}</div></div>`+(PS=='r'?(setTimeout(calc),RC()):lst(PS));
+/* Eigene Zielwerte, Erinnerungen, Vorrat, Kosten, Hilfen */
+const P0=P.map(p=>[p.a,p.b]);
+const applyT=()=>P.forEach((p,i)=>{const t=(S.tgt||{})[p.k];p.a=t?t[0]:P0[i][0];p.b=t?t[1]:P0[i][1]});
+function tgtSave(){S.tgt={};P.forEach(p=>{const a=parseFloat($('ta_'+p.k).value),b=parseFloat($('tb_'+p.k).value);if(a==a&&b==b&&a<b)S.tgt[p.k]=[a,b]});go()}
+const TZ=()=>`<div class=card><h2>Zielwerte für dieses Becken</h2><p class=mu>Passe die Sollbereiche an, z. B. für ein SPS-Becken. Status und Hinweise richten sich danach.</p><div class=t><table><tr><th>Wert<th>Min<th>Max</tr>${P.map(p=>`<tr><td>${p.n} ${p.u}<td><input id=ta_${p.k} type=number step=any value=${p.a} style="min-width:80px"><td><input id=tb_${p.k} type=number step=any value=${p.b} style="min-width:80px"></tr>`).join('')}</table></div><button class=b onclick="tgtSave()">Speichern</button> <button class=s onclick="S.tgt={};go()">Standard</button></div>`;
+LD.vm={n:'Vorrat (Verbrauchsmaterial)',f:[['d','Stand vom','date'],['a','Produkt'],['m','Vorrat (Menge)'],['r','Verbrauch pro Woche']]};
+LD.kos={n:'Kosten',f:[['d','Datum','date'],['a','Posten (Strom, Salz, Technik …)'],['m','Betrag (€)']]};
+const vmL=x=>{const m=parseFloat(x.m),r=parseFloat(x.r);return m>=0&&r>0?(m-r*(new Date(td())-new Date(x.d||td()))/6048e5)/r:null};
+const extra=()=>{let h='';const w=sw(),n=td(),old=[],low=[];
+P.forEach(p=>{const m=w.filter(x=>x[p.k]!=null).pop();if(m&&m.d<n&&dd(m.d,n)>10)old.push(`${p.n} (${dd(m.d,n)} Tage)`)});
+(S.vm||[]).forEach(x=>{const l=vmL(x);if(l!=null&&l<2)low.push(`${e(x.a)}: noch ca. ${Math.max(0,l).toFixed(1)} Wochen`)});
+if(old.length)h+=`<div class=card><h2>🧴 Zeit für eine Messung</h2><p>${old.join(', ')}</p></div>`;
+if(low.length)h+=`<div class=card style="border-color:var(--wa)"><h2>📦 Vorrat wird knapp</h2>${low.map(x=>'<p>'+x+'</p>').join('')}</div>`;
+if(/^https?:\/\//.test(S.tank.album||''))h+=`<div class=card><h2>📷 Fotos</h2><a href="${e(S.tank.album)}" target=_blank rel=noopener style="color:var(--ac)">Album öffnen ↗</a></div>`;
+return h};
+const sum=k=>{if(k=='vm')return `<div class=card><h2>Reichweite</h2>${(S.vm||[]).map(x=>{const l=vmL(x);return l==null?'':`<div class=row><span>${e(x.a)}</span><span class="chip c${l<2?2:l<4?1:0}">${Math.max(0,l).toFixed(1)} Wochen</span></div>`}).join('')||'<p class=mu>Trage Vorrat und Verbrauch pro Woche ein.</p>'}</div>`;
+if(k=='kos'){const n=td(),K=S.kos||[],f=p=>K.filter(x=>(x.d||'').startsWith(p)).reduce((a,x)=>a+(parseFloat(x.m)||0),0),b=S.t.reduce((a,x)=>a+(x.p||0)*(+x.c||1),0);return `<div class=card><h2>Kosten</h2><p>Dieser Monat: <b>${f(n.slice(0,7)).toFixed(2)} €</b> · Dieses Jahr: <b>${f(n.slice(0,4)).toFixed(2)} €</b></p><p class=mu>Besatz (unter Tiere): ${b.toFixed(2)} €</p></div>`}return ''};
+const PH=[
+['Cyanobakterien (rote Schmierschicht)',['no3','po4'],'Oft zu wenig Strömung, ein Nährstoffungleichgewicht und viel organischer Eintrag.','Absaugen, Strömung erhöhen, Wasserwechsel, Futtermenge prüfen, Abschäumer reinigen.'],
+['Fadenalgen',['no3','po4'],'Meist zu viele Nährstoffe oder zu lange und zu starke Beleuchtung.','Nährstoffe senken, Algen von Hand entfernen, Beleuchtungsdauer prüfen, Algenfresser erwägen.'],
+['Dinoflagellaten (braune Schleimfäden)',['no3','po4'],'Häufig bei sehr niedrigen Nährstoffen und instabilen Werten.','Nicht zu stark aushängern, Werte stabilisieren, absaugen, Fachrat einholen.'],
+['Kieselalgen (brauner Belag)',['po4'],'Typisch im neuen Becken oder bei Silikat im Wasser.','Meist vorübergehend; absaugen und Osmosewasser prüfen.'],
+['Grünalgen-Büschel (z. B. Bryopsis)',['no3','po4'],'Nährstoffe, aber auch eingeschleppte Ableger können die Ursache sein.','Neue Ableger kontrollieren, Algen entfernen, Nährstoffe prüfen.'],
+['Weißpünktchen auf Fischen',['sal','temp'],'Parasitenbefall (Cryptocaryon), oft bei Stress oder neuen Fischen.','Quarantäne und Fachhandel oder Tierarzt fragen; Wasserwerte stabil halten.'],
+['Korallen bleichen aus',['no3','po4','temp'],'Zu wenig Nährstoffe, zu viel Licht oder zu hohe Temperatur.','Temperatur, Licht und Nährstoffe prüfen; Änderungen nur langsam.'],
+['Korallen öffnen sich nicht',['kh','ca','mg','sal'],'Stress durch schwankende Werte, Strömung oder Nachbarn.','KH, Calcium, Magnesium und Salinität prüfen, Position oder Strömung ändern.'],
+['Trübes, milchiges Wasser',['no2','nh4'],'Bakterienblüte nach einer Störung oder Überfütterung.','Nicht überreagieren, Futter reduzieren, Filter prüfen, evtl. Teilwasserwechsel.']];
+let HI=0,RD=7;
+const HP=()=>{const h=PH[HI],w=sw();return `<div class=card><h2>Problemhilfe</h2><select onchange="HI=+this.value;go()">${PH.map((x,i)=>`<option value=${i} ${i==HI?'selected':''}>${x[0]}</option>`).join('')}</select><p style="margin-top:8px"><b>Mögliche Ursachen:</b> ${h[2]}</p><p><b>Was du tun kannst:</b> ${h[3]}</p><h2 style="margin-top:10px">Deine aktuellen Werte dazu</h2>${h[1].map(k=>{const p=P.find(q=>q.k==k),m=w.filter(x=>x[k]!=null).pop();return `<div class=row><span>${p.n}</span><span>${m?m[k]+' '+p.u+' '+chip(p,m[k]):'<span class=mu>noch kein Wert</span>'}</span></div>`}).join('')}<p class=mu>Allgemeine Hinweise, keine Diagnose. Bei kranken Tieren Fachhandel oder Tierarzt fragen.</p></div>`};
+const CMPT=()=>{const T=[S,...(S.x||[]).map(x=>x.s)];return `<div class=card><h2>Becken im Vergleich</h2>${T.length<2?'<p class=mu>Lege über das Becken-Menü oben ein zweites Becken an.</p>':`<div class=t><table><tr><th>Wert${T.map(s=>'<th>'+e(nm(s))).join('')}</tr>${P.map(p=>`<tr><td>${p.n}${T.map(s=>{const v=(s.w||[]).filter(x=>x[p.k]!=null).sort((a,b)=>a.d<b.d?-1:1).slice(-5).map(x=>+x[p.k]);return '<td>'+(v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(2):'–')}).join('')}</tr>`).join('')}<tr><td>Volumen (L)${T.map(s=>'<td>'+(s.tank.v||'–')).join('')}</tr><tr><td>Tiere${T.map(s=>'<td>'+(s.t||[]).filter(x=>!x.x).length).join('')}</tr></table></div><p class=mu>Durchschnitt der letzten 5 Messungen.</p>`}</div>`};
+const BER=()=>{const n=td(),w=sw().filter(x=>x.d<=n&&dd(x.d,n)<=RD),L=k=>(S[k]||[]).filter(x=>x.d&&x.d<=n&&dd(x.d,n)<=RD).length;
+const rows=P.map(p=>{const v=w.filter(x=>x[p.k]!=null).map(x=>+x[p.k]);if(!v.length)return '';const o=v.filter(z=>st(p,z)>0).length;return `<tr><td>${p.n}<td>${(v.reduce((s,z)=>s+z,0)/v.length).toFixed(2)} ${p.u}<td>${v.length}<td class="x${o?1:0}">${o} außerhalb</tr>`}).join('');
+return `<div class=card><h2>Bericht: ${e(nm(S))}</h2><select onchange="RD=+this.value;go()"><option value=7 ${RD==7?'selected':''}>Letzte 7 Tage<option value=30 ${RD==30?'selected':''}>Letzte 30 Tage</select>${rows?`<div class=t><table><tr><th>Wert<th>Ø<th>Messungen<th>Status</tr>${rows}</table></div>`:'<p class=mu>Keine Messungen im Zeitraum.</p>'}<p>Dosierungen: <b>${L('dos')}</b> · Tagebuch: <b>${L('log')}</b> · Krank/Quarantäne: <b>${L('med')}</b> · Neue Tiere: <b>${S.t.filter(x=>x.d&&dd(x.d,n)<=RD&&x.d<=n).length}</b></p><button class=b onclick="window.print()">Drucken / als PDF speichern</button></div>`};
+const TLN=()=>{const E=[];if(S.tank.s)E.push([S.tank.s,'🌊','Becken gestartet']);S.t.forEach(x=>{E.push([x.d,'🐟','Eingesetzt: '+x.n+' ×'+x.c]);if(x.x)E.push([x.x,'†','Verstorben: '+x.n])});sw().forEach(x=>E.push([x.d,'🧪','Messung ('+P.filter(p=>x[p.k]!=null).length+' Werte)']));
+[['dos','💧'],['med','💊'],['log','📝'],['icp','🔬']].forEach(([k,i])=>(S[k]||[]).forEach(x=>E.push([x.d,i,LD[k].n+': '+(x.a||x.o||'')])));
+const L=E.filter(x=>x[0]).sort((a,b)=>a[0]<b[0]?1:-1).slice(0,60);return `<div class=card><h2>Zeitleiste</h2>${L.length?L.map(x=>`<div class=row><span>${fd(x[0])} ${x[1]} ${e(x[2])}</span></div>`).join(''):'<p class=mu>Noch keine Ereignisse.</p>'}</div>`};
+V.p=()=>`<div class=card><div class=g style="grid-template-columns:repeat(3,1fr)">${[['r','Rechner'],['dr','Dosier-Rechner'],['z','Zielwerte'],['dos','Dosierung'],['vm','Vorrat'],['kos','Kosten'],['fut','Futter'],['med','Krank / Quarantäne'],['log','Tagebuch'],['icp','Labortests'],['wish','Wunschliste'],['h','Problemhilfe'],['v','Becken-Vergleich'],['b','Bericht'],['tl','Zeitleiste'],['ew','Einrichtungsplan'],['str','Stromkosten'],['ur','Urlaub'],['lern','Lernpfad']].map(([k,n])=>`<button class="${PS==k?'b':'s'}" style="margin:0;padding:8px;font-size:13px" onclick="PS='${k}';go()">${n}</button>`).join('')}</div></div>`+(PS=='r'?(setTimeout(calc),RC()):PS=='dr'?(setTimeout(dfill),DR()+dplan()):PS=='z'?TZ():PS=='h'?HP():PS=='v'?CMPT():PS=='b'?BER():PS=='tl'?TLN():PS=='ew'?EW():PS=='ur'?UR():PS=='lern'?LN():(PS=='str'?strC():sum(PS))+lst(PS));
+/* Suche */
+let SQ='',SC='all',SRL=[];
+const SCATS=[['all','Alles'],['fisch','Fische'],['kor','Korallen & Co.'],['fach','Fachbegriffe'],['tier','Meine Tiere'],['tech','Technik'],['wert','Wasserwerte'],['aufg','Aufgaben'],['pfl','Pflege-Einträge'],['krank','Krankheiten & Plagen']];
+const SR=()=>{const q=SQ.trim().toLowerCase();if(!q)return [];const R=[],m=(...a)=>a.join(' ').toLowerCase().includes(q);
+FISH.forEach((f,i)=>{if(m(f[0],f[5],f[6]))R.push(['fisch',f[0],`ab ${f[1]} L · ${f[2]} cm · ${TMP[f[3]]} · ${RS[f[4]]}`,()=>{FI=i;go('f')}])});
+COR.forEach(c=>{if(m(c[0],c[1],c[5]))R.push(['kor',c[0],`${c[1]} · Licht: ${c[2]} · ${DF[c[4]]}. ${c[5]}`,()=>{LS='c';LQ=c[0];go('l')}])});
+GL.forEach(g=>{if(m(g[0],g[1]))R.push(['fach',g[0],g[1],()=>{LS='g';LQ=g[0];go('l')}])});
+S.t.forEach(x=>{if(m(x.n,x.t,x.o,x.h))R.push(['tier',`${x.n} ×${x.c}`,`${x.t} · seit ${fd(x.d)}${x.x?' · verstorben':''}`,()=>go('t')])});
+S.tech.forEach(x=>{if(m(x.c,x.n,x.o))R.push(['tech',`${x.c}: ${x.n}`,x.o||'',()=>go('b')])});
+const w=sw();P.forEach(p=>{if(m(p.n,p.k)){const l=w.filter(x=>x[p.k]!=null).pop();R.push(['wert',p.n,`${l?'aktuell '+l[p.k]+' '+p.u+' · ':''}Soll ${p.a}–${p.b} ${p.u}`,()=>{S.sel=p.k;go('w')}])}});
+w.forEach(x=>{if(m(fd(x.d),x.n))R.push(['wert','Messung vom '+fd(x.d),P.filter(p=>x[p.k]!=null).map(p=>p.n+' '+x[p.k]).join(', '),()=>go('w')])});
+S.k.forEach(k=>{if(m(k.n))R.push(['aufg',k.n,`alle ${k.d} Tage · zuletzt ${fd(k.l)}`,()=>go('k')])});
+Object.keys(LD).forEach(k=>(S[k]||[]).forEach(x=>{const t=LD[k].f.map(([a,l,ty])=>x[a]?(ty=='date'?fd(x[a]):x[a]):'').filter(Boolean).join(' · ');if(m(LD[k].n,t))R.push(['pfl',`${LD[k].n}: ${x.a||x.o||''}`,t,()=>{PS=k;go('p')}])}));
+KR.forEach(k=>{if(m(k[1],k[2],k[3],k[4]))R.push(['krank',k[1],k[2],()=>{XF='all';XG='all';XQ=k[1];go('x')}])});
+return R};
+const SRH=()=>{const all=SR(),cnt=c=>c=='all'?all.length:all.filter(r=>r[0]==c).length,R=all.filter(r=>SC=='all'||r[0]==SC);SRL=R;
+const chips=`<div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0">${SCATS.map(([k,n])=>`<button class="${SC==k?'b':'s'}" style="margin:0;padding:6px 10px;font-size:13px" onclick="SC='${k}';sres()">${n}${SQ.trim()?' ('+cnt(k)+')':''}</button>`).join('')}</div>`;
+if(!SQ.trim())return chips+'<p class=mu>Gib einen Suchbegriff ein, zum Beispiel „Doktorfisch“, „KH“ oder „Abschäumer“.</p>';
+const nm2=c=>(SCATS.find(s=>s[0]==c)||[,''])[1];
+return chips+(R.length?R.slice(0,80).map((r,i)=>`<div class=row><div><b>${e(r[1])}</b> <span class=chip style="background:var(--ac)">${nm2(r[0])}</span><br><span class=mu>${e(r[2]||'')}</span></div><button class=s onclick="SRL[${i}][3]()">Öffnen</button></div>`).join('')+(R.length>80?'<p class=mu>Nur die ersten 80 Treffer. Verfeinere die Suche.</p>':''):'<p class=mu>Nichts gefunden.</p>')};
+function sres(){$('sr').innerHTML=SRH()}
+V.s=()=>`<div class=card><h2>🔍 Suche</h2><input type=search placeholder="Fisch, Koralle, Begriff, Wert, Technik …" value="${e(SQ)}" oninput="SQ=this.value;sres()"><div id=sr>${SRH()}</div></div>`;
+/* Krankheiten & Plagen: Typ, Name, Erkennen, Ursache, Lösung, Vorbeugen, Dringlichkeit 0-2 */
+const KR=[
+['Fisch','Weißpünktchen (Cryptocaryon)','Weiße Pünktchen wie Salzkörner auf Haut und Flossen, Scheuern an Steinen, schnelle Atmung, Appetitlosigkeit.','Meist mit neuen Fischen eingeschleppt; Stress durch schlechte Wasserwerte oder Mobbing begünstigt den Ausbruch.','Alle Fische in ein Hospitalbecken setzen und dort mit einem zugelassenen Mittel behandeln, zum Beispiel Kupfer mit Testkit oder nach Anleitung abgesenktem Salzgehalt. Das Hauptbecken ohne Fische lassen (mehrere Wochen), weil sich die Parasiten im Becken vermehren. Kupfer und viele Mittel töten Korallen, Garnelen und Schnecken, deshalb nie im Riffbecken anwenden.',' Neue Fische 4 bis 6 Wochen in Quarantäne halten, Stress vermeiden, Wasserwerte stabil halten.',2],
+['Fisch','Samtkrankheit (Amyloodinium/Oodinium)','Feiner gold- bis grauer Belag wie Puderzucker, eingeklemmte Flossen, sehr schnelle Atmung, Fische hängen an der Oberfläche.','Einzelliger Parasit, der sich schnell im Becken ausbreitet; oft nach Neuzugängen oder Stress.','Notfall: sofort ins Hospitalbecken und mit zugelassenem Mittel behandeln (etwa Kupfer oder ein Antiseptikum laut Packungsbeilage). Weil der Parasit Photosynthese betreibt, wird oft im Dunkeln behandelt. Ein vorhandener UV-Klärer muss während der Behandlung aus. Das Hauptbecken danach fischfrei stehen lassen.','Quarantäne für jeden Neuzugang, Becken sauber halten, Stress vermeiden.',2],
+['Fisch','Brooklynellose','Graue bis weißliche Schleimschicht, Haut löst sich in Fetzen, Fische atmen schwer; häufig bei Clownfischen und Seepferdchen, sehr schnell tödlich.','Parasitische Einzeller (Brooklynella) aus dem Handel oder durch Stress.','Sofort handeln: kurzes Süßwasserbad (temperatur- und pH-angepasst, unter Aufsicht) kann erste Entlastung bringen, danach Hospitalbecken und Behandlung mit einem Mittel gegen Hauttrüber nach Packungsbeilage; Tierarzt oder Fachhandel einbinden.','Quarantäne, Fische vor dem Kauf auf Schleimbelag prüfen.',2],
+['Fisch','Uronema (Hautparasit)','Hautabschürfungen, offene Stellen, Schleimabsonderung, rasche Verschlechterung; ähnelt Brooklynellose.','Einzeller, begünstigt durch Stress und schlechtes Wasser.','Hospitalbecken, Wasserwechsel, Behandlung nach tierärztlicher oder fachhändlerischer Beratung; Süßwasserbad kann Parasiten abtöten, aber nicht bei geschwächten Fischen ohne Rat.','Quarantäne und gute Wasserqualität.',2],
+['Fisch','Hautwürmer / Kiemenwürmer (Flukes)','Fische kratzen sich, schnelle Kiemenbewegung, trübe Haut, Weißpünktchen fehlen.','Wurmparasiten (Monogenea), meist durch Neuzugänge.','Hospitalbecken und Behandlung mit einem Mittel gegen Hautwürmer (zum Beispiel Praziquantel-Bad nach Anleitung); kurzes Süßwasserbad kann helfen. Tierarzt fragen.','Quarantäne, Fische vor dem Einsetzen beobachten.',1],
+['Fisch','Flossenfäule und Hautinfektionen (bakteriell)','Ausgefranste, rötliche oder zerfallende Flossen, rote Stellen oder Geschwüre auf der Haut.','Schlechte Wasserqualität, Verletzungen oder Stress; Bakterien nutzen die Schwäche aus.','Wasserwerte verbessern (Wasserwechsel), Fisch in Hospitalbecken, Antiseptikum oder Antibiotikum nur nach Beratung durch Tierarzt oder Fachhandel anwenden.','Sauberes Wasser, kein Mobbing, abwechslungsreiches Futter.',1],
+['Fisch','Pilzbefall','Watteartiger weißer Belag auf Haut oder Flossen, Appetitlosigkeit.','Meist sekundär nach Verletzung oder bei geschwächten Fischen.','Wasserqualität verbessern, im Hospitalbecken mit Antiseptikum laut Packungsbeilage behandeln; Ursache der Schwächung suchen.','Verletzungen vermeiden, Wasserwerte stabil halten.',1],
+['Fisch','Lymphocystis (Blumenkohlkrankheit)','Rauhe, helle Knoten an Haut und Flossen, meist ohne Verhaltensänderung.','Viren, oft bei Stress oder nach Verletzungen.','Meist heilt sie von selbst. Gutes Wasser, Stress vermeiden, vitaminreiches Futter; Antibiotika helfen nicht.','Stabile Haltung, wenig Stress.',0],
+['Fisch','Lochkrankheit (HLLE) bei Doktorfischen','Löcher und Rillen im Kopfbereich, oft mit hellem Schleim.','Häufig Futter- oder Vitaminmangel, schlechte Wasserqualität; manchmal auch Strom im Wasser.','Pflanzliches Futter wie Algen anbieten, Vitamine zufüttern, Wasserwechsel, Technik auf Streustrom prüfen (Erdung) und Aktivkohle einsetzen.','Abwechslungsreich füttern, Wasserqualität hoch halten.',1],
+['Fisch','Stress durch Ammoniak, Nitrit oder Temperatur','Fische hecheln, bleiben an der Oberfläche, scheuern, verstecken sich.','Schlechte Wasserwerte, Überbesatz, plötzliche Schwankungen.','Wasser testen, Teilwasserwechsel, Futter reduzieren, Belüftung erhöhen und Ursache beheben.','Einlaufphase beachten, nicht überbesetzen, Werte regelmäßig messen.',1],
+['Plage','Glasrosen (Aiptasia)','Braune, durchsichtige Anemonen an Steinen und Rückwänden, vermehren sich schnell.','Wird mit Gestein oder Ablegern eingeschleppt; Nährstoffe fördern das Wachstum.','Gezielt mit Aiptasia-Mitteln oder Kalkwasserpaste spritzen, Berghia-Nacktschnecken oder Pinzettfisch einsetzen. Nicht herausreißen: Fragmente wachsen weiter. Pfefferminzgarnelen helfen oft, aber nicht zuverlässig.','Ableger und Gestein kontrollieren, Nährstoffe niedrig halten.',1],
+['Plage','Majano-Anemonen','Kleine, bräunlich-rosa Scheibenanemonen mit Tentakeln, die Korallen stechen können.','Einschleppung mit Gestein oder Ablegern; Nährstoffe begünstigen das Wachstum.','Kalkwasserpaste oder passende Spezialmittel einsetzen, befallene Steine herausnehmen und außerhalb behandeln.','Ableger vorher kontrollieren, Nährstoffe niedrig halten.',1],
+['Plage','Acropora-Strudelwürmer (AEFW)','Kleine braune Würmchen auf Acropora, Gewebeverlust, helle Eier an den Zweigen.','Meist über neue Acropora eingeschleppt, vermehren sich schnell.','Befallene Korallen dippen und das Becken mit einem Spezialmittel behandeln (Packungsbeilage beachten, UV aus). Als Fressfeinde nennt ein Hersteller bestimmte kleine Lippfische und die Drachenkopf-Seenadel, Cirrhilabrus-Arten helfen dagegen kaum.','Neue Acropora im Quarantänebecken dippen und beobachten.',2],
+['Plage','Rote Planarien (Plattwürmer)','Kleine rote Würmchen auf Steinen, Glas und Schneckenhäusern; oft in Massen.','Gut gefüttertes Becken, hohe Nährstoffe.','Meist harmlos: absaugen, Nährstoffe senken, Futter reduzieren; bei Massenbefall Spezialmittel aus dem Fachhandel nach Anleitung.','Nicht überfüttern, regelmäßig absaugen.',0],
+['Plage','Cyanobakterien (Schmieralgen)','Rote, grüne oder braune Schmierschicht auf Boden und Steinen, riecht muffig.','Zu wenig Strömung, Nährstoffungleichgewicht, viel organische Stoffe.','Absaugen, Strömung erhöhen, Teilwasserwechsel, Abschäumer reinigen und Futter reduzieren. Nur im Notfall spezielle Mittel nach Anleitung.','Strömung, Nährstoffe und Pflege im Griff behalten.',1],
+['Plage','Dinoflagellaten (Dinos)','Braune Schleimfäden mit Bläschen auf Sand und Steinen, oft sehr hartnäckig.','Nährstoffarmut, instabile Werte oder zu viel Licht.','Absaugen, Werte stabilisieren (nicht zu stark aushungern), eventuell kurzzeitig verdunkeln, bei starkem Befall Fachrat einholen.','Nährstoffe in einem stabilen Rahmen halten.',2],
+['Plage','Bryopsis','Federartige grüne Büschel auf Steinen und Ablegern, wachsen schnell.','Meist mit Steinen oder Ablegern eingeschleppt; Nährstoffe fördern das Wachstum.','Befallene Stücke entfernen oder außerhalb des Beckens behandeln, Nährstoffe senken, Fachmittel nur nach Anleitung und mit Vorsicht bei Wirbellosen.','Neue Ableger und Steine kontrollieren.',1],
+['Plage','Blasenalgen (Valonia)','Grüne, perlenartige Blasen auf Steinen.','Hohe Nährstoffe, meist durch Einschleppung.','Blasen vorsichtig entfernen, ohne sie zu zerdrücken, damit keine Sporen frei werden; Smaragdkrabbe kann sie fressen. Nährstoffe niedrig halten.','Nährstoffe niedrig, Ableger prüfen.',0],
+['Plage','Feuerwürmer (Borstenwürmer)','Rötliche oder grünliche Würmer mit Borsten, nachts sichtbar.','Mit Gestein eingeschleppt; meist nützliche Restevertilger.','Normalerweise nicht bekämpfen. Sehr große Tiere lassen sich mit einer Falle fangen. Beim Anfassen Handschuhe tragen.','Nur bei Massenbefall Futter reduzieren.',0],
+['Plage','Röhrenschnecken (Vermetiden)','Schneckenröhren mit Schleimfäden, die Korallen reizen.','Mit Ablegern eingeschleppt, vermehren sich bei viel Futter.','Befallene Stellen mechanisch entfernen, Schleimfäden absaugen, Futter reduzieren; manche Lippfische fressen junge Tiere.','Ableger kontrollieren, weniger füttern.',1],
+['Plage','Nacktschnecken auf Korallen','Weiße Eispiralen, Gewebeverlust an Montipora oder Zoanthus, kleine Schnecken auf der Koralle.','Meist an neuen Korallen eingeschleppt.','Koralle dippen, Schnecken und Eier absammeln und absaugen, Koralle im Quarantänebecken beobachten.','Neue Korallen kontrollieren und dippen.',1],
+['Plage','Seesterne (Asterina)','Kleine, fünfstrahlige Seesterne, die sich stark vermehren.','Mit Gestein eingeschleppt, Futter im Überfluss.','Meist harmlos; bei Massenvermehrung einsammeln und Futtermenge senken.','Nicht überfüttern.',0],
+['Plage','Hydren','Kleine, durchsichtige Polypen an Steinen und Korallen, die stechen.','Vermehren sich bei viel Futter.','Absaugen, befallene Korallen dippen, Futter reduzieren, notfalls nach Anleitung behandeln.','Futter reduzieren, Ableger prüfen.',1]
+];
+let XF='all',XQ='';
+const XH=()=>{const q=XQ.trim().toLowerCase();return KR.filter(k=>(XF=='all'||k[0]==XF)&&(!q||(k[1]+k[2]+k[3]+k[4]).toLowerCase().includes(q))).map(k=>`<details class=card style="border-top-color:${['#1b9e5a','#d99a00','#d64545'][k[6]]}"><summary style="cursor:pointer"><b>${k[1]}</b> <span class="chip c${k[6]}">${['Meist harmlos','Behandeln','Dringend'][k[6]]}</span></summary><p><b>Erkennen:</b> ${k[2]}</p><p><b>Ursache:</b> ${k[3]}</p><p><b>Lösung:</b> ${k[4]}</p><p><b>Vorbeugen:</b> ${k[5]}</p></details>`).join('')||'<p class=mu>Nichts gefunden.</p>'};
+let XG='all';
+const XCAT={'Weißpünktchen (Cryptocaryon)':'Parasiten','Samtkrankheit (Amyloodinium/Oodinium)':'Parasiten','Brooklynellose':'Parasiten','Uronema (Hautparasit)':'Parasiten','Hautwürmer / Kiemenwürmer (Flukes)':'Parasiten','Flossenfäule und Hautinfektionen (bakteriell)':'Bakterien, Pilze & Viren','Pilzbefall':'Bakterien, Pilze & Viren','Lymphocystis (Blumenkohlkrankheit)':'Bakterien, Pilze & Viren','Lochkrankheit (HLLE) bei Doktorfischen':'Haltung & Stress','Stress durch Ammoniak, Nitrit oder Temperatur':'Haltung & Stress','Glasrosen (Aiptasia)':'Anemonen & Polypen','Majano-Anemonen':'Anemonen & Polypen','Hydren':'Anemonen & Polypen','Acropora-Strudelwürmer (AEFW)':'Würmer','Rote Planarien (Plattwürmer)':'Würmer','Feuerwürmer (Borstenwürmer)':'Würmer','Cyanobakterien (Schmieralgen)':'Algen & Beläge','Dinoflagellaten (Dinos)':'Algen & Beläge','Bryopsis':'Algen & Beläge','Blasenalgen (Valonia)':'Algen & Beläge','Röhrenschnecken (Vermetiden)':'Schnecken & Sonstige','Nacktschnecken auf Korallen':'Schnecken & Sonstige','Seesterne (Asterina)':'Schnecken & Sonstige'};
+const XORD=['Parasiten','Bakterien, Pilze & Viren','Haltung & Stress','Anemonen & Polypen','Würmer','Algen & Beläge','Schnecken & Sonstige'];
+const xd=k=>`<details class=card style="border-top-color:${['#1b9e5a','#d99a00','#d64545'][k[6]]}"><summary style="cursor:pointer"><b>${k[1]}</b> <span class="chip c${k[6]}">${['Meist harmlos','Behandeln','Dringend'][k[6]]}</span></summary><p><b>Erkennen:</b> ${k[2]}</p><p><b>Ursache:</b> ${k[3]}</p><p><b>Lösung:</b> ${k[4]}</p><p><b>Vorbeugen:</b> ${k[5]}</p></details>`;
+const XH2=()=>{const q=XQ.trim().toLowerCase(),L=KR.filter(k=>(XF=='all'||k[0]==XF)&&(XG=='all'||XCAT[k[1]]==XG)&&(!q||(k[1]+k[2]+k[3]+k[4]).toLowerCase().includes(q)));
+return XORD.map(c=>{const l=L.filter(k=>XCAT[k[1]]==c);return l.length?`<h2 style="margin:14px 4px 6px">${c} <span class=mu>(${l.length})</span></h2>`+l.map(xd).join(''):''}).join('')||'<p class=mu>Nichts gefunden.</p>'};
+const xchips=()=>{const cs=XORD.filter(c=>XF=='all'||KR.some(k=>k[0]==XF&&XCAT[k[1]]==c));return `<div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0">${[['all','Alle Kategorien'],...cs.map(c=>[c,c])].map(([k,n])=>`<button class="${XG==k?'b':'s'}" style="margin:0;padding:6px 10px;font-size:13px" onclick="XG='${k}';go()">${n}</button>`).join('')}</div>`};
+function xres(){$('xl').innerHTML=XH2()}
+V.x=()=>`<div class=card><h2>🩺 Krankheiten &amp; Plagen</h2><div class=g style="grid-template-columns:repeat(3,1fr)">${[['all','Alle'],['Fisch','Krankheiten'],['Plage','Plagen']].map(([k,n])=>`<button class="${XF==k?'b':'s'}" style="margin:0;padding:8px" onclick="XF='${k}';XG='all';go()">${n}</button>`).join('')}</div>${xchips()}<input type=search placeholder="Suchen …" value="${e(XQ)}" oninput="XQ=this.value;xres()" style="margin-top:8px"><p class=mu>Allgemeine Hinweise, keine Diagnose und keine tierärztliche Beratung. Mittel immer nach Packungsbeilage anwenden. Kupfer und viele Medikamente schaden Korallen, Garnelen und Schnecken, deshalb im Hospitalbecken behandeln.</p></div><div id=xl>${XH2()}</div>`;
+
+/* Mehr-Menü, Erste Schritte, Schnellzugriffe */
+V.m=()=>`<div class=card><h2>Mehr</h2><div class=g style="grid-template-columns:repeat(2,1fr)">${[['f','🐟','Fisch-Check','Passt ein Fisch ins Becken?'],['l','📖','Lexikon','Fische, Korallen, Begriffe'],['x','🩺','Krankheiten','Krankheiten und Plagen'],['b','⚙️','Becken & Technik','Maße, Volumen, Geräte'],['p','🧰','Pflege & Tools','Rechner, Dosierung, Tagebuch'],['s','🔍','Suche','Alles durchsuchen'],['icpa','🔬','ICP-Analyse','PDF hochladen und auswerten'],['d','💾','Daten','Backup, Export, Reset']].map(a=>`<button class=q onclick="go('${a[0]}')"><span style="font-size:24px">${a[1]}</span><br><b>${a[2]}</b><br><span class=mu>${a[3]}</span></button>`).join('')}</div></div><div class=card><h2>Einstellungen</h2><label style="display:flex;gap:8px;align-items:center;color:var(--tx);font-size:15px"><input type=checkbox style="width:auto" ${S.pro?'checked':''} onchange="S.pro=this.checked;go()"> Profi-Modus (alle Wasserwerte)</label><p class=mu>Aus: beim Eintragen nur die wichtigsten Werte. An: alle neun Werte.</p></div>`;
+function qk(){const k=S.k.find(x=>/wasserwechsel/i.test(x.n));if(k)done(k.id);else go('k')}
+const start=()=>{const s=[[!!S.tank.v,'Becken eintragen','Größe und Technik','b'],[S.w.length>0,'Erste Messung eintragen','Wasserwerte festhalten','w'],[S.t.some(x=>!x.x),'Erstes Tier eintragen','Fische und Korallen','t']],n=s.filter(x=>x[0]).length;
+return (n<3?`<div class=card><h2>👋 Erste Schritte (${n}/3)</h2>${s.map(x=>`<div class=row><span class="${x[0]?'x0':''}">${x[0]?'✔':'○'} <b>${x[1]}</b><br><span class=mu>${x[2]}</span></span>${x[0]?'':`<button class=s onclick="go('${x[3]}')">Los</button>`}</div>`).join('')}</div>`:'')+
+`<div class=g style="grid-template-columns:repeat(2,1fr);margin-bottom:12px">${[['🧪','Messung eintragen',"go('w')"],['💧','Wasserwechsel erledigt',"qk()"],['🐟','Tier hinzufügen',"go('t')"],['🔍','Suchen',"go('s')"]].map(a=>`<button class=q onclick="${a[2]}"><span style="font-size:22px">${a[0]}</span><br>${a[1]}</button>`).join('')}</div>`};
+const ov0=V.ov;V.ov=()=>start()+health()+trend()+ov0();
+
+/* Salz-Auswahl: Marken + eigene Salze */
+const SALZ=[['Anderes Salz (eigener Wert)',35,'r'],['Tropic Marin Pro-Reef',38,'h'],['Tropic Marin Classic',38,'r'],['Tropic Marin Bio-Actif',35,'r'],['Tropic Marin Syn-Biotic',35,'r'],['Aqua Medic Reef Salt',38,'h'],['Red Sea Coral Pro',35,'r'],['Red Sea Salt (Blue Bucket)',35,'r'],['Instant Ocean Sea Salt',35,'r'],['Instant Ocean Reef Crystals',35,'r'],['Seachem Reef Salt',35,'r'],['Aquaforest Reef Salt',35,'r'],['Zoo Med Reef Salt',35,'r']];
+const sInfo=()=>{const v=S.sSel||'b:0',[k,i]=v.split(':');if(k=='c'){const c=(S.salz||[]).find(x=>x.id==i);if(c)return {n:c.n,g:c.g,t:'c',key:v}}
+const key=k=='b'?v:'b:0',b=SALZ[+key.split(':')[1]]||SALZ[0],o=(S.sv||{})[key];return {n:b[0],g:o||b[1],t:o?'e':b[2],key}};
+const sNote=si=>({h:'Herkunft: Herstellerangabe, etwa '+si.g+' g pro Liter für 35 ppt. Bitte mit deiner Packung abgleichen.',r:'Richtwert '+si.g+' g pro Liter für 35 ppt. Die Angabe auf deiner Packung kann abweichen, trage sie unten ein, dann merkt sich die App den Wert.',e:'Dein gespeicherter Wert für dieses Salz.',c:'Dein eigenes Salz.'})[si.t];
+const saltCard=v=>{const si=sInfo(),cs=S.salz||[],n=(id,l,val)=>`<div><label>${l}</label><input id="r_${id}" type=number step=any inputmode=decimal value="${val}" oninput="calc()"></div>`;
+return `<div class=card><h2>🧂 Salz ansetzen</h2><div class=g><div style="grid-column:1/-1"><label>Salzmarke</label><select id=r_salz onchange="saltSel()">${SALZ.map((b,i)=>`<option value="b:${i}" ${si.key=='b:'+i?'selected':''}>${b[0]}</option>`).join('')}${cs.length?`<optgroup label="Meine Salze">${cs.map(c=>`<option value="c:${c.id}" ${si.key=='c:'+c.id?'selected':''}>${e(c.n)}</option>`).join('')}</optgroup>`:''}</select></div>${n('sl','Wassermenge (L)',v?Math.round(v/10):'')}${n('ss','Ziel-Salinität (ppt)',35)}${n('sg','Salz pro Liter für 35 ppt (g)',si.g)}</div><p id=o_sn class=mu style="margin-top:8px">${sNote(si)}</p><p id=o_s></p>${si.key[0]=='c'?'<button class=s onclick="delSalz()">Dieses Salz löschen</button>':''}
+<details style="margin-top:10px"><summary style="cursor:pointer">Eigenes Salz speichern</summary><div class=g style="margin-top:8px"><div><label>Name</label><input id=r_cn></div><div><label>Menge (g) pro Liter</label><input id=r_cg type=number step=any inputmode=decimal></div><div><label>für Salinität (ppt)</label><input id=r_cp type=number step=any inputmode=decimal value=35></div></div><button class=b onclick="addSalz()">Speichern</button></details>
+<p class=mu>Üblich sind etwa 33 bis 40 g Salz pro Liter für 35 ppt, je nach Marke. Salz immer ins Wasser geben, nicht umgekehrt, und die Dichte nach dem Auflösen mit dem Refraktometer prüfen.</p></div>`};
+function saltSel(){S.sSel=$('r_salz').value;const si=sInfo();$('r_sg').value=si.g;$('o_sn').innerHTML=sNote(si);save();go()}
+function saltSave(sg){if(!(sg>0))return;const si=sInfo();if(sg==si.g)return;if(si.key[0]=='c'){const c=S.salz.find(x=>'c:'+x.id==si.key);if(c)c.g=sg}else(S.sv=S.sv||{})[si.key]=sg;save()}
+function addSalz(){const n=$('r_cn').value.trim(),g=parseFloat($('r_cg').value),pp=parseFloat($('r_cp').value)||35;if(!n||!(g>0)){alert('Bitte Name und Menge pro Liter eintragen.');return}
+const c={id:Date.now(),n,g:Math.round(g/pp*35*10)/10};(S.salz=S.salz||[]).push(c);S.sSel='c:'+c.id;go()}
+function delSalz(){if(!confirm('Dieses Salz löschen?'))return;const k=(S.sSel||'').split(':')[1];S.salz=(S.salz||[]).filter(x=>x.id!=k);S.sSel='b:0';go()}
+
+/* Gesundheit, Trend, Besatz-Check, Wartung, Strom, Plan, Urlaub, Lernpfad, Export */
+let LF='all';
+const lfc=()=>`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${[['all','Alle Fische'],['reef','Riffsicher'],['small','Bis 150 Liter']].map(([k,n])=>`<button class="${LF==k?'b':'s'}" style="margin:0;padding:6px 10px;font-size:13px" onclick="LF='${k}';go()">${n}</button>`).join('')}</div>`;
+const health=()=>{const w=sw();if(!w.length)return '';const l=w[w.length-1];let sc=100;const why=[];
+P.forEach(p=>{if(l[p.k]==null)return;const a=st(p,l[p.k]);if(a==1){sc-=6;why.push(p.n+' leicht abweichend')}if(a==2){sc-=15;why.push(p.n+' kritisch')}});
+const od=S.k.filter(k=>dl(k)<-3);if(od.length){sc-=Math.min(15,od.length*5);why.push(od.length+' Aufgabe(n) überfällig')}
+const age=dd(l.d,td());if(age>14){sc-=10;why.push('letzte Messung vor '+age+' Tagen')}
+sc=Math.max(0,sc);const c=sc>=85?0:sc>=60?1:2;
+return `<div class=card><h2>💚 Becken-Gesundheit <span class="chip c${c}">${['Stabil','Achtung','Handeln'][c]}</span></h2><div style="height:10px;background:var(--bd);border-radius:6px;overflow:hidden"><div style="width:${sc}%;height:100%;background:var(--${['ok','wa','er'][c]})"></div></div><p>${sc} von 100 Punkten. ${why.length?'Wichtigste Punkte: '+why.slice(0,3).join(', ')+'.':'Alles im grünen Bereich.'}</p></div>`};
+const trend=()=>{const o=[],w=sw();['kh','ca','mg','no3','po4','ph','sal','temp'].forEach(k=>{const p=P.find(q=>q.k==k),a=w.filter(x=>x[k]!=null).slice(-4);if(a.length<3)return;
+const t0=new Date(a[0].d),xs=a.map(x=>(new Date(x.d)-t0)/864e5),ys=a.map(x=>+x[k]),n=a.length,mx=xs.reduce((s,z)=>s+z,0)/n,my=ys.reduce((s,z)=>s+z,0)/n,den=xs.reduce((s,z)=>s+(z-mx)**2,0);if(!den)return;
+const b=xs.reduce((s,z,i)=>s+(z-mx)*(ys[i]-my),0)/den,cur=ys[n-1];let lim=null;if(b<0&&cur>p.a)lim=p.a;else if(b>0&&cur<p.b)lim=p.b;if(lim==null)return;
+const days=Math.round((lim-cur)/b);if(days>0&&days<=30)o.push(`${p.n}: ${b>0?'steigt':'sinkt'} etwa ${Math.abs(b).toFixed(2)} ${p.u} pro Tag und erreicht ${b>0?'die obere':'die untere'} Grenze (${lim}) in etwa ${days} Tagen.`)});
+return o.length?`<div class=card><h2>📈 Trend-Warnung</h2>${o.map(x=>`<p>${x}</p>`).join('')}<p class=mu>Berechnet aus deinen letzten Messungen, nur eine Schätzung.</p></div>`:''};
+const bsc=()=>{const F=S.t.filter(x=>x.t=='Fisch'&&!x.x),v=+S.tank.v||0,R=[];if(!F.length)return `<div class=card><h2>Besatz-Check</h2><p class=mu>Trage unter „Tiere“ Fische ein, dann prüft die App deinen ganzen Besatz.</p></div>`;
+const K=F.map(x=>({x,f:known(x)})),kn=K.filter(k=>k.f),nm3=l=>l.map(k=>e(k.x.n)).join(', ');
+if(v){const cm=K.reduce((a,k)=>a+((k.f||[])[2]||8)*(+k.x.c||1),0);R.push([cm>v/10*1.3?2:cm>v/10?1:0,`Besatzdichte: ${cm} cm Gesamtlänge ausgewachsen, Faustregel für dein Becken ${Math.round(v/10)} cm.`])}
+kn.forEach(k=>{if(v&&v<k.f[1])R.push([2,`${e(k.x.n)} braucht mindestens ${k.f[1]} L, dein Becken hat ${v} L.`])});
+const ag=kn.filter(k=>k.f[3]==2),pe=kn.filter(k=>k.f[3]==0);if(ag.length&&pe.length)R.push([1,`Aggressive Fische (${nm3(ag)}) zusammen mit friedlichen (${nm3(pe)}).`]);
+TERR.forEach(g=>{const l=kn.filter(k=>k.f[5]==g);if(l.length>1)R.push([1,`Mehrere Fische der Gruppe „${g}“ (${nm3(l)}): Revierstreit möglich.`])});
+const cor=S.t.some(x=>x.t=='Koralle'&&!x.x),nr=kn.filter(k=>k.f[4]==2),br=kn.filter(k=>k.f[4]==1);
+if(cor&&nr.length)R.push([2,`Nicht riffsicher: ${nm3(nr)} gefährden deine Korallen.`]);if(cor&&br.length)R.push([1,`Bedingt riffsicher: ${nm3(br)}.`]);
+const un=F.length-kn.length;if(un)R.push([1,`${un} Fisch(e) stehen nicht im Lexikon und wurden nicht geprüft.`]);
+if(R.every(r=>r[0]==0))R.push([0,'Keine Konflikte gefunden.']);const m=Math.max(...R.map(r=>r[0]));
+return `<div class=card><h2>Besatz-Check: dein ganzer Besatz <span class="chip c${m}">${['Passt','Mit Einschränkungen','Konflikte'][m]}</span></h2>${R.map(r=>`<div class=row><span class="x${r[0]}">${['✔','⚠','✖'][r[0]]}</span><span style="flex:1">${r[1]}</span></div>`).join('')}</div>`};
+const f0=V.f;V.f=()=>f0()+bsc();
+const WP=[['Heizer und Thermostat prüfen',90],['Osmose-Filter prüfen oder wechseln',180],['Leuchtmittel und LED prüfen',180],['Refraktometer kalibrieren',30],['Aktivkohle erneuern',30],['Thermometer vergleichen',90],['Abschäumerpumpe reinigen',60],['Notfallplan für Stromausfall prüfen',180]];
+const wartCard=()=>`<div class=card><h2>🛠 Wartungsplan für Geräte</h2><p class=mu>Fügt ${WP.length} Wartungsaufgaben hinzu, die noch fehlen: Heizer, Osmose-Filter, Leuchtmittel, Refraktometer und mehr.</p><button class=b onclick="addWart()">Wartungsplan hinzufügen</button></div>`;
+function addWart(){let n=0;WP.forEach(([t,d])=>{if(!S.k.some(k=>k.n==t))S.k.push({id:Date.now()+n++,n:t,d,l:td()})});go()}
+const k0=V.k;V.k=()=>k0()+wartCard();
+LD.str={n:'Stromverbrauch',f:[['a','Gerät'],['m','Leistung (Watt)'],['r','Stunden pro Tag']]};
+const strC=()=>{const kwh=S.kwh>0?S.kwh:.35,m=(S.str||[]).reduce((a,x)=>a+(parseFloat(x.m)||0)*(parseFloat(x.r)||0),0)/1000*30;
+return `<div class=card><h2>⚡ Stromkosten</h2><label>Strompreis (€ pro kWh)</label><input type=number step=.01 inputmode=decimal value="${kwh}" onchange="S.kwh=parseFloat(this.value)||.35;go()"><p style="margin-top:8px">Verbrauch: <b>${m.toFixed(1)} kWh</b> pro Monat · Kosten: <b>${(m*kwh).toFixed(2)} €</b> pro Monat, <b>${(m*kwh*12).toFixed(0)} €</b> pro Jahr</p><p class=mu>Trage Geräte mit Leistung und täglicher Laufzeit ein. Heizer und Pumpen laufen oft nicht mit voller Leistung, es ist eine Schätzung.</p></div>`};
+const EW=()=>{const st0=S.tank.s,age=st0?Math.round((new Date(td())-new Date(st0))/864e5):null;
+const ph=[[0,'Becken aufbauen und befüllen','Technik testen, Salzwasser ansetzen und die Salinität prüfen, Lebendgestein und Sand einbringen.'],[1,'Einlaufphase','Nichts oder nur sehr sparsam füttern, Ammonium und Nitrit alle paar Tage messen.'],[14,'Werte stabilisieren','Wenn Ammonium und Nitrit nahe 0 sind, Teilwasserwechsel. Erste Algen sind normal.'],[28,'Erste Fische','Robuste, friedliche Fische einzeln einsetzen, vorher Quarantäne. Zwischen Neuzugängen mehrere Wochen warten.'],[56,'Erste Korallen','Anspruchslose Weich- und LPS-Korallen, Werte stabil halten, Beleuchtung langsam steigern.'],[120,'Reifes Becken','Besatz langsam erweitern, Zielwerte pflegen, regelmäßig messen.']];
+const cur=age==null?-1:ph.reduce((a,x,i)=>age>=x[0]?i:a,0);
+return `<div class=card><h2>🧭 Einrichtungsplan</h2><p class=mu>${age==null?'Trage unter „Becken & Technik“ das Startdatum ein, dann zeigt die App deine aktuelle Phase.':'Dein Becken läuft seit '+age+' Tagen.'}</p>${ph.map((x,i)=>`<div class=row style="${i==cur?'background:var(--bg);border-radius:10px;padding:8px':''}"><div><b>${i==cur?'➜ ':''}${x[1]}</b> <span class=mu>ab Tag ${x[0]}</span><br><span class=mu>${x[2]}</span></div></div>`).join('')}</div>`};
+const UR=()=>{const f=(S.fut||[]).map(x=>('- '+[x.a,x.m,x.t,x.o].filter(Boolean).join(', '))).join('\n')||'- (Futterplan unter Pflege & Tools eintragen)',k=S.k.map(x=>`- ${x.n}: alle ${x.d} Tage, zuletzt ${fd(x.l)}`).join('\n');
+const txt=`Meerwasser-Becken ${nm(S)}: Hinweise für die Vertretung\n\nFütterung:\n${f}\n\nRegelmäßige Aufgaben:\n${k}\n\nBei Problemen: Wasserstand, Temperatur und Strömung prüfen, nicht mehr füttern und mich anrufen.`;
+const C=['Wasserwechsel kurz vor der Abreise','Heizer, Kühlung und Pumpen prüfen','Nachfüllautomat und Osmosewasser-Vorrat füllen','Futter portionieren (Futterautomat oder Beutel)','Beleuchtung auf Zeitschaltuhr stellen','Notfallkontakt hinterlegen','Vertretung einweisen'];
+return `<div class=card><h2>🏖 Urlaubs-Checkliste</h2>${C.map(c=>`<div class=row><label style="display:flex;gap:8px;color:var(--tx);font-size:15px"><input type=checkbox style="width:auto"> ${c}</label></div>`).join('')}</div><div class=card><h2>Hinweise für die Vertretung</h2><textarea rows=12 readonly onclick="this.select()" style="width:100%">${e(txt)}</textarea><button class=b onclick="window.print()">Drucken</button></div>`};
+const LN=()=>{const L=[['Stickstoffkreislauf','Futter und Ausscheidungen werden zu Ammonium, Bakterien machen daraus Nitrit und dann Nitrat. Ammonium und Nitrit sind giftig, Nitrat nur in hohen Mengen. Bakterien brauchen Wochen, bis sie ausreichend vorhanden sind.'],['Einlaufphase','Ein neues Becken läuft einige Wochen ein, bevor Tiere einziehen. Miss Ammonium und Nitrit: erst wenn beide nahe null sind, darf der erste Besatz langsam kommen.'],['Salinität','Meerwasser hat etwa 35 ppt Salz. Das Wasser verdunstet, das Salz bleibt: Fülle deshalb mit Osmosewasser nach und prüfe die Salinität mit einem Refraktometer.'],['KH, Calcium und Magnesium','Korallen bauen ihr Skelett daraus. Die KH puffert den pH-Wert. Wichtig ist Stabilität: Ändere diese Werte nur langsam.'],['Nitrat und Phosphat','Nährstoffe aus Futter und Fischen. Zu viel fördert Algen, zu wenig lässt Korallen ausbleichen. Ein ruhiger Wert ist besser als ein Extremwert.'],['Quarantäne','Neue Fische kommen zuerst in ein eigenes Becken. Dort beobachtest du sie einige Wochen und behandelst bei Bedarf, ohne das Hauptbecken zu gefährden.'],['Wasserwechsel','Regelmäßige kleine Wasserwechsel (zum Beispiel 10 Prozent alle zwei Wochen) halten die Werte stabil und ersetzen Spurenelemente.']];
+return `<div class=card><h2>🎓 Lernpfad für Einsteiger</h2><p class=mu>Kurz und einfach, der Reihe nach lesen.</p></div>`+L.map((l,i)=>`<details class=card><summary style="cursor:pointer"><b>${i+1}. ${l[0]}</b></summary><p>${l[1]}</p></details>`).join('')};
+const dplan=()=>{const v=+S.tank.v||0,w=sw(),r=[];if(!v)return '';['kh','ca','mg'].forEach(k=>{const a=w.filter(x=>x[k]!=null).slice(-2);if(a.length<2)return;const c=(a[1][k]-a[0][k])/dd(a[0].d,a[1].d);
+if(c>=0){r.push(`${DS[k].n}: kein Verbrauch erkennbar (${c.toFixed(2)} ${DS[k].u} pro Tag).`);return}r.push(`${DS[k].n}: Verbrauch etwa ${(-c).toFixed(2)} ${DS[k].u} pro Tag, das sind rund ${(-c*v/100/DS[k].P[0][1]).toFixed(1)} g ${DS[k].P[0][0]} pro Tag, um den Wert zu halten.`)});
+return `<div class=card><h2>📅 Tagesplan aus deinem Verbrauch</h2>${r.length?r.map(x=>'<p>'+x+'</p>').join(''):'<p class=mu>Pro Wert werden mindestens zwei Messungen benötigt.</p>'}<p class=mu>Gilt nur zum Halten des aktuellen Werts. Anheben auf den Zielwert machst du oben im Rechner in kleinen Schritten.</p></div>`};
+const stab=()=>{const w=sw(),r=P.map(p=>{const v=w.filter(x=>x[p.k]!=null).map(x=>+x[p.k]);if(v.length<3)return '';const m=v.reduce((a,b)=>a+b,0)/v.length,sd=Math.sqrt(v.reduce((a,b)=>a+(b-m)**2,0)/v.length),cv=m?sd/m*100:0,c=cv<3?0:cv<8?1:2;return `<div class=row><span>${p.n}</span><span><span class="chip c${c}">${['Ruhig','Etwas unruhig','Unruhig'][c]}</span> <span class=mu>±${cv.toFixed(1)} %</span></span></div>`}).join('');
+return r?`<div class=card><h2>Stabilität der Werte</h2>${r}<p class=mu>Gemessen als Schwankung (Standardabweichung) in Prozent des Mittelwerts. Je kleiner, desto ruhiger der Wert.</p></div>`:''};
+const w0=V.w;V.w=()=>w0()+stab();
+const csvCard=()=>`<div class=card><h2>Tabelle exportieren</h2><p class=mu>Alle Messwerte als CSV für Excel oder Numbers.</p><button class=b onclick="expCsv()">CSV exportieren</button></div>`;
+async function expCsv(){const w=sw(),h=['Datum',...P.map(p=>p.n+' ('+p.u+')'),'Notiz'],rows=w.map(x=>[x.d,...P.map(p=>String(x[p.k]??'').replace('.',',')),'"'+String(x.n||'').replace(/"/g,'""')+'"']),csv=[h.join(';'),...rows.map(r=>r.join(';'))].join('\n'),n='wasserwerte-'+td()+'.csv';let d=null;try{d=window.claude&&await claude.use('downloads')}catch(err){}
+if(d){try{await d.save({filename:n,data:csv})}catch(err){if(!err||err.code!='declined')alert('Export nicht möglich.')}return}
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=n;a.click()}
+const d0=V.d;V.d=()=>d0()+csvCard();
+
+/* ICP-Analyse: PDF, Bilder oder Text, Auswertung durch Claude (sample) */
+let ICPS={txt:'',imgs:[],name:'',busy:false,res:null,err:'',msg:''};
+function loadPdfJs(){return new Promise((ok,no)=>{if(window.pdfjsLib)return ok();const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+sc.onload=()=>{try{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';ok()}catch(err){no(err)}};sc.onerror=()=>no(new Error('pdfjs'));document.head.appendChild(sc)})}
+async function icpFile(inp){const fs=[...(inp.files||[])];if(!fs.length)return;ICPS.err='';ICPS.msg='';ICPS.res=null;ICPS.name=fs[0].name;ICPS.imgs=[];ICPS.txt='';
+try{const f=fs[0];if(/\.pdf$/i.test(f.name)||f.type=='application/pdf'){await loadPdfJs();const pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;let t='';
+for(let i=1;i<=Math.min(pdf.numPages,12);i++){const pg=await pdf.getPage(i),c=await pg.getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n'}
+ICPS.txt=t.trim();if(ICPS.txt.length<80){ICPS.txt='';ICPS.err='Aus dem PDF konnte kaum Text gelesen werden (vermutlich ein Scan). Lade stattdessen Screenshots oder Fotos der Seiten hoch.'}}
+else if(fs.every(x=>/^image\//.test(x.type)))ICPS.imgs=fs;else ICPS.err='Bitte ein PDF oder Bilder wählen.'}
+catch(err){ICPS.err='Die Datei konnte nicht gelesen werden. Lade stattdessen Screenshots hoch oder füge den Text unten ein.'}
+icpR()}
+const icpR=()=>{const el=$('icpbox');if(el)el.innerHTML=icpBox()};
+async function icpRun(){ICPS.err='';ICPS.msg='';const hasImg=ICPS.imgs.length>0;if(!ICPS.txt.trim()&&!hasImg){ICPS.err='Bitte zuerst eine Datei hochladen oder Text einfügen.';icpR();return}
+let sm=null;try{sm=window.claude&&await claude.use('sample')}catch(err){}
+if(!sm){ICPS.err='Die Auswertung ist hier nicht verfügbar. Öffne die App eingeloggt in Claude.';icpR();return}
+ICPS.busy=true;ICPS.res=null;icpR();
+const tgt=P.map(p=>`${p.n}: ${p.a}-${p.b} ${p.u}`).join('; ');
+const prompt=`Du bist ein erfahrener Meerwasser-Aquaristik-Berater. Werte diese ICP-OES-Wasseranalyse eines Riffaquariums aus. Beckenvolumen: ${S.tank.v||'unbekannt'} Liter. Beckentyp: ${S.tank.typ||'unbekannt'}. Zielwerte des Nutzers: ${tgt}.\nBewerte jeden gefundenen Wert gegen übliche Riffwerte in den Stufen ok, warn, krit. Nenne Ursachen und Prioritäten, gib konkrete, vorsichtige Maßnahmen in kleinen Schritten, ohne exakte Dosiermengen (verweise auf Herstellerangaben). Beachte Schwermetalle und Nährstoffe besonders. Antworte NUR als JSON in diesem Format: {"zusammenfassung":string,"datum":"YYYY-MM-DD oder leer","werte":[{"name":string,"wert":string,"einheit":string,"soll":string,"status":"ok|warn|krit","hinweis":string}],"massnahmen":[{"prio":1,"titel":string,"schritte":string}],"messwerte":{"ca":number,"mg":number,"kh":number,"sal":number,"no3":number,"po4":number},"nachtest":string}. messwerte nur mit Werten, die im Bericht stehen, in mg/l, dKH und ppt, sonst weglassen.\n\n`+(ICPS.txt?'Bericht:\n'+ICPS.txt.slice(0,24000):'Der Bericht liegt als Bild vor.');
+try{const o={modelTier:'complex',cache:false};if(hasImg){const lim=await sm.limits();if(!(lim&&lim.images))throw {code:'noimg'};o.images=ICPS.imgs}
+ICPS.res=await sm.json(prompt,o)}
+catch(err){ICPS.err=err&&err.code=='rate_limited'?'Zu viele Anfragen, bitte kurz warten.':err&&err.code=='noimg'?'Bilder werden hier nicht unterstützt. Verwende ein PDF mit Text oder füge den Text ein.':'Die Auswertung hat nicht geklappt. Bitte erneut versuchen.'}
+ICPS.busy=false;icpR()}
+const icpD=r=>/^\d{4}-\d{2}-\d{2}$/.test(r&&r.datum||'')?r.datum:td();
+function icpSave(){const r=ICPS.res;if(!r)return;(S.icp=S.icp||[]).push({id:Date.now(),d:icpD(r),a:'ICP-Analyse',o:String(r.zusammenfassung||'').slice(0,300)});save();ICPS.msg='Gespeichert unter Mehr → Pflege & Tools → Labortests.';icpR()}
+function icpTake(){const r=ICPS.res,m=r&&r.messwerte||{},o={id:Date.now(),d:icpD(r||{}),n:'aus ICP-Analyse'};let n=0;['ca','mg','kh','sal','no3','po4'].forEach(k=>{const v=Number(m[k]);if(isFinite(v)&&m[k]!=null&&m[k]!==''){o[k]=v;n++}});
+if(!n){ICPS.msg='Im Bericht wurden keine passenden Werte gefunden.';icpR();return}S.w.push(o);save();ICPS.msg=n+' Werte als Messung übernommen (Tab Werte).';icpR()}
+const icpBox=()=>{let h='';
+if(ICPS.imgs.length||ICPS.txt)h+=`<p class=mu>${ICPS.imgs.length?ICPS.imgs.length+' Bild(er) bereit':'Text bereit ('+ICPS.txt.length+' Zeichen)'}${ICPS.name?' · '+e(ICPS.name):''}</p>`;
+if(ICPS.err)h+=`<div class=card style="border-color:var(--er)"><p>${e(ICPS.err)}</p></div>`;
+if(ICPS.msg)h+=`<div class=card style="border-color:var(--ok)"><p>${e(ICPS.msg)}</p></div>`;
+if(ICPS.busy)h+='<div class=card><p>⏳ Die ICP-Analyse wird ausgewertet …</p></div>';
+const r=ICPS.res;if(r&&Array.isArray(r.werte)){const m={ok:0,warn:1,krit:2},c=[0,0,0];r.werte.forEach(x=>c[m[x.status]??1]++);
+h+=`<div class=card><h2>Ergebnis ${r.datum?'<span class=mu>'+e(r.datum)+'</span>':''}</h2><p>${e(r.zusammenfassung||'')}</p><p><span class="chip c0">${c[0]} ok</span> <span class="chip c1">${c[1]} Hinweis</span> <span class="chip c2">${c[2]} kritisch</span></p></div>`+
+`<div class=card><h2>Maßnahmen</h2>${(r.massnahmen||[]).map(x=>`<div class=row><div><b>${e(x.prio||'')}. ${e(x.titel)}</b><br><span class=mu>${e(x.schritte)}</span></div></div>`).join('')||'<p class=mu>Keine Maßnahmen nötig.</p>'}${r.nachtest?`<p class=mu>Nachtest: ${e(r.nachtest)}</p>`:''}</div>`+
+`<div class=card><h2>Alle Werte</h2><div class=t><table><tr><th>Wert<th>Messung<th>Soll<th>Status</tr>${r.werte.map(x=>{const s=m[x.status]??1;return `<tr><td>${e(x.name)}${x.hinweis?'<br><span class=mu style="white-space:normal">'+e(x.hinweis)+'</span>':''}<td>${e(x.wert)} ${e(x.einheit)}<td>${e(x.soll)}<td><span class="chip c${s}">${['OK','Hinweis','Kritisch'][s]}</span></tr>`}).join('')}</table></div></div>`+
+`<div class=card><button class=b onclick="icpSave()">In Labortests speichern</button> <button class=s onclick="icpTake()">Werte als Messung übernehmen</button><p class=mu>Auswertung durch Claude als Orientierung. Bei starken Abweichungen den Test wiederholen und den Fachhandel fragen. Dosierung nur nach Herstellerangabe.</p></div>`}
+return h};
+V.icpa=()=>`<div class=card><h2>🔬 ICP-Analyse auswerten</h2><p class=mu>Lade deinen ICP-Test als PDF hoch, oder Screenshots der Seiten. Die App liest die Werte und zeigt Auffälligkeiten und Maßnahmen. Zur Auswertung werden die Inhalte an Claude gesendet.</p><input type=file id=icpf accept="application/pdf,image/*" multiple onchange="icpFile(this)"><label style="margin-top:8px">Oder Text einfügen</label><textarea id=icpt rows=4 style="width:100%" oninput="ICPS.txt=this.value;ICPS.imgs=[]" placeholder="Werte aus dem Laborbericht hier einfügen"></textarea><button class=b onclick="icpRun()">Auswerten</button></div><div id=icpbox>${icpBox()}</div>`;
+
+/* ICP bestellen: Anbieter und Anleitung */
+const ICPV=[['Fauna Marin Lab','ICP-OES','Reef ICP Test mit 37 Werten, größere Pakete mit über 90 Werten, Osmosewasser ebenfalls testbar','https://lab.faunamarin.de/en/home'],['Oceamo','ICP-MS','mehr als 40 Elemente, auch Osmosewasser','https://en.oceamo.com/'],['ICP-Analysis','ICP-MS','61 Elemente','https://www.icp-analysis.com/'],['Triton Lab','ICP-OES','etwa 42 Werte','https://www.triton-lab.de/en/aquaria-administration'],['Reef Labs','ICP-OES','etwa 36 Werte','https://reefs-lab.com']];
+function icpTask(){if(!S.k.some(k=>k.n=='ICP-Test einschicken'))S.k.push({id:Date.now(),n:'ICP-Test einschicken',d:60,l:td()});ICPS.msg='Aufgabe „ICP-Test einschicken“ (alle 60 Tage) wurde angelegt.';icpR()}
+const orderCard=()=>`<div class=card><h2>🛒 ICP-Test bestellen</h2><p class=mu>Bestellen kann ich für dich nicht. Hier findest du bekannte Labore, die Sets liefern und Proben auswerten. Die Seiten öffnen sich im Browser.</p>${ICPV.map(v=>`<div class=row><div><b>${v[0]}</b> <span class=chip style="background:var(--ac)">${v[1]}</span><br><span class=mu>${v[2]}</span></div><a href="${v[3]}" target=_blank rel=noopener style="color:var(--ac);white-space:nowrap">Öffnen ↗</a></div>`).join('')}<p class=mu>ATI bietet ebenfalls ICP-Analysen an (OES und MS), meist über den Fachhandel. Angaben zu Umfang und Verfahren nach einem Vergleichstest von 2023, Preise und Pakete ändern sich, bitte auf der Seite des Anbieters prüfen.</p></div>
+<div class=card><h2>So läuft es ab</h2><div class=row><span><b>1.</b> Set beim Labor oder im Fachhandel bestellen</span></div><div class=row><span><b>2.</b> Wasserprobe nach Anleitung des Sets nehmen (saubere Flasche, Probe aus dem Becken)</span></div><div class=row><span><b>3.</b> Probe einschicken, das Ergebnis kommt meist als PDF im Kundenkonto</span></div><div class=row><span><b>4.</b> PDF hier oben hochladen und auswerten lassen</span></div><button class=b onclick="icpTask()">Erinnerung alle 60 Tage anlegen</button><p class=mu>Üblich sind ICP-Tests etwa alle 4 bis 8 Wochen oder nach größeren Änderungen im Becken.</p></div>`;
+const icpa0=V.icpa;V.icpa=()=>icpa0()+orderCard();
+let FID=0;
+function fishSVG(f,sz){const [c1,c2,sh,pt]=OV[f[0]]||GC[f[5]]||['#4aa3d8','#ffffff',0,'plain'],W=sz*1.6;
+if(sh==4)return `<svg viewBox="0 0 100 60" width="${W}" height="${sz}" aria-hidden="true"><path d="M58 8c-14-2-20 12-12 20s2 12-4 18c-3 4 3 9 10 7" fill="none" stroke="${c1}" stroke-width="9" stroke-linecap="round" /><circle cx="58" cy="11" r="7" fill="${c1}" /><path d="M64 10h12" stroke="${c2}" stroke-width="3" stroke-linecap="round" /><circle cx="60" cy="9" r="1.8" fill="#123" /></svg>`;
+const id='fc'+(++FID),rx=[30,26,32][sh],ry=[17,24,10][sh],cx=sh==1?44:45,T=['72,30 94,14 94,46','68,30 90,12 90,48','76,30 96,19 96,41'][sh];let p='';
+if(pt=='bands')p=`<rect x="${cx-14}" y="0" width="5" height="60" fill="${c2}" opacity="0.9" /><rect x="${cx+4}" y="0" width="5" height="60" fill="${c2}" opacity="0.9" />`;
+if(pt=='stripe')p=`<rect x="0" y="29" width="100" height="3" fill="${c2}" />`;
+if(pt=='dots')p=[0,1,2,3].map(i=>`<circle cx="${cx-10+i*9}" cy="${28+(i%2)*6}" r="2.3" fill="${c2}" />`).join('');
+return `<svg viewBox="0 0 100 60" width="${W}" height="${sz}" aria-hidden="true"><polygon points="${T}" fill="${c2}" opacity="0.9" /><path d="M${cx-14} ${30-ry+1} Q${cx} ${30-ry-13} ${cx+20} ${30-ry+3}Z" fill="${c2}" opacity="0.85" /><clipPath id="${id}"><ellipse cx="${cx}" cy="30" rx="${rx}" ry="${ry}" /></clipPath><g clip-path="url(#${id})"><rect width="100" height="60" fill="${c1}" />${p}</g><circle cx="${cx-rx+9}" cy="27" r="3.4" fill="#fff" /><circle cx="${cx-rx+8.4}" cy="27" r="1.7" fill="#123" /></svg>`}
+const img=(f,s)=>`<span class="pic">${fishSVG(f,s)}</span>`;
+const CAT={clown:1,chromis:35,damsel:35,dotty:46,goby:13,dart:13,tang:5,wrasse:29,sixline:29,cardinal:20,dragonet:27,seahorse:93,angel:16,butterfly:8,trigger:6,lion:41,anthias:9,hawk:24,blenny:39,gramma:46};
+const lx=f=>'https://www.meerwasser-lexikon.de/kategorie/'+(f[0].startsWith('Imperator')?19:CAT[f[5]])+'.html';
+const DF=['einfach','mittel','anspruchsvoll'];
+/* Name, Typ, Licht, Strömung, Schwierigkeit 0-2, Hinweis */
+const COR=[
+['Pilzkoralle (Discosoma)','Weichkoralle','niedrig bis mittel','niedrig',0,'Gute Anfängerkoralle; vermehrt sich schnell, Abstand zu Nachbarn lassen.'],
+['Kenia-Baum (Capnella)','Weichkoralle','mittel','mittel',0,'Wächst schnell, Ableger lassen sich leicht abschneiden und weitergeben.'],
+['Lederkoralle (Sarcophyton)','Weichkoralle','mittel','mittel',0,'Setzt Stoffe ab, die Nachbarn stören; Aktivkohle hilft. Häutet sich regelmäßig.'],
+['Xenia','Weichkoralle','mittel','mittel',1,'Pumpt rhythmisch, wuchert stark – am besten auf eigenem Stein halten.'],
+['Zoanthus (Krustenanemone)','Weichkoralle','mittel bis hoch','mittel',0,'Beim Schneiden Handschuhe und Schutzbrille tragen (Palytoxin).'],
+['Hammerkoralle (Euphyllia)','LPS','mittel','mittel',1,'Lange Tentakel, die Nachbarn verletzen; viel Abstand halten.'],
+['Elegans-Koralle (Catalaphyllia)','LPS','mittel','niedrig',2,'Empfindlich gegen Schwankungen; ruhige Strömung, nicht auf Kiesboden stoßen.'],
+['Blasenkoralle (Plerogyra)','LPS','niedrig bis mittel','mittel',1,'Nachts mit langen Fangtentakeln; Abstand zu Nachbarn.'],
+['Stylophora (Nadelkoralle)','SPS','hoch','hoch',1,'Robuste SPS-Koralle für Einsteiger in SPS.'],
+['Montipora','SPS','hoch','hoch',1,'Braucht stabile KH, Calcium und Magnesium.'],
+['Acropora','SPS','hoch','hoch',2,'Sehr stabile Werte und wenig Nährstoffe nötig; für erfahrene Aquarianer.'],
+['Putzergarnele (Lysmata)','Wirbellose','–','mittel',0,'Frisst Parasiten und Reste; empfindlich gegen Kupfer und schnelle Salzschwankungen.'],
+['Feuergarnele (Lysmata debelius)','Wirbellose','–','mittel',1,'Scheu, braucht Höhlen; kann kleine Fische in Ruhe lassen, aber nicht mit Drückern halten.'],
+['Turbo-Schnecke','Wirbellose','–','mittel',0,'Frisst Algen; kann Korallen umwerfen, wenn sie klettert.'],
+['Trompetenkoralle (Caulastrea)','LPS','mittel','niedrig bis mittel',0,'Robust und gut für Einsteiger; ruhige Strömung, nicht zu nah an Nachbarn.'],
+['Goniopora','LPS','mittel','mittel',2,'Schwer zu halten, braucht regelmäßiges Futter und stabile Werte.'],
+['Blasenanemone (Entacmaea)','Seeanemone','mittel bis hoch','mittel',1,'Wandert im Becken und kann Pumpen verstopfen; erst in reifen Becken einsetzen.'],
+['Riesenmuschel (Tridacna)','Wirbellose','hoch','mittel',1,'Braucht viel Licht und stabile Werte, vor allem Calcium und KH.'],
+['Pfefferminzgarnele','Wirbellose','–','mittel',0,'Frisst Glasrosen (Aiptasia); schwankt in ihrer Wirksamkeit.'],
+['Einsiedlerkrebs','Wirbellose','–','mittel',0,'Nützlicher Algenfresser, kann aber Schneckenhäuser knacken und Schäden anrichten.']
+];
+const GL=[
+['KH (Karbonathärte)','Puffer für den pH-Wert und Baustoff der Korallenskelette, angegeben in dKH.'],
+['Calcium / Magnesium','Baustoffe der Korallen; Magnesium hält Calcium und KH stabil.'],
+['Salinität','Salzgehalt in ppt oder als Dichte; Zielwert im Riff etwa 34–36 ppt.'],
+['Nitrat / Phosphat','Nährstoffe aus Futter und Fischen; zu viel fördert Algen, zu wenig lässt Korallen bleichen.'],
+['Abschäumer','Entfernt organische Stoffe, bevor sie zu Nitrat/Phosphat werden.'],
+['Sump / Technikbecken','Becken unter dem Aquarium für Technik wie Abschäumer, Heizer und Pumpen.'],
+['Osmosewasser','Gereinigtes Wasser zum Nachfüllen und Ansetzen von Meerwasser.'],
+['Einlaufphase','Reifung des Beckens (meist mehrere Wochen), bis die Filterbakterien stabil arbeiten.'],
+['LPS / SPS','Large-/Small-Polyp-Stony: Steinkorallen mit großen bzw. kleinen Polypen.'],
+['Riffsicher','Fisch oder Wirbelloser, der Korallen in der Regel in Ruhe lässt.'],
+['Weißpünktchenkrankheit','Parasitenbefall (Cryptocaryon) mit weißen Punkten auf der Haut; schnell behandeln.'],
+['Aiptasia (Glasrose)','Lästige Glasanemone, die sich stark vermehrt; Pinzettfisch oder Spezialmittel helfen.'],
+['Refugium','Zusatzbecken mit Algen oder Mikrofauna zum Nährstoffabbau.'],
+['ATO (Nachfüllautomat)','Füllt verdunstetes Wasser automatisch mit Osmosewasser nach.'],
+['Quarantänebecken','Separates Becken, in dem Neuzugänge beobachtet und ggf. behandelt werden.'],
+['Akklimatisierung','Langsame Anpassung neuer Tiere an Temperatur und Salzgehalt deines Beckens, oft per Tropfmethode über ein bis zwei Stunden.'],
+['Tropfmethode','Beckenwasser tropft langsam in den Transportbehälter, damit sich das Tier schonend an die Wasserwerte gewöhnt.'],
+['Dip','Kurzes Bad für Korallen oder Fische in einer speziellen Lösung, um Parasiten oder Schädlinge vor dem Einsetzen zu entfernen.'],
+['Samtkrankheit (Amyloodinium)','Parasitenbefall mit feinem goldbraunem Belag, schnellem Atmen und Scheuern; muss rasch behandelt werden.'],
+['Hyposalinität','Behandlung mit abgesenktem Salzgehalt, um bestimmte Parasiten zu bekämpfen; nur mit genauer Anleitung.'],
+['Wildfang / Nachzucht','Wildfang stammt aus dem Meer, Nachzucht aus der Zucht. Nachzuchten sind oft robuster und schonen die Riffe.'],
+['Frag / Ableger','Abgetrenntes Stück einer Koralle, das als eigene Kolonie weiterwächst und getauscht oder verkauft werden kann.'],
+['Polyp','Einzelnes Tier einer Koralle mit Mund und Tentakeln; viele Polypen bilden zusammen die Kolonie.'],
+['Zooxanthellen','Mikroskopische Algen in Korallengewebe, die per Photosynthese Energie liefern und die Farbe mitbestimmen.'],
+['Korallenbleiche','Die Koralle verliert ihre Zooxanthellen und wird blass, oft durch Hitze, zu viel Licht oder Nahrungsmangel.'],
+['Symbiose','Zusammenleben zweier Arten zum gegenseitigen Nutzen, zum Beispiel Anemonenfisch und Seeanemone.'],
+['Lebendgestein','Gestein mit Bakterien, Algen und Kleintieren, das als natürlicher Filter und Lebensraum dient.'],
+['Lebendsand','Sand mit lebenden Mikroorganismen, der die Filterbiologie unterstützt und den Beckenstart beschleunigt.'],
+['Nitrifikation','Bakterien wandeln giftiges Ammonium über Nitrit in weniger giftiges Nitrat um.'],
+['Denitrifikation','Bakterien bauen Nitrat unter Sauerstoffmangel zu Stickstoffgas ab, zum Beispiel im Lebendgestein oder in Biopellet-Reaktoren.'],
+['Biopellets','Kleine Kunststoffkügelchen als Nahrung für Bakterien, die Nitrat und Phosphat aus dem Wasser aufnehmen.'],
+['Aktivkohle','Bindet gelöste Farb- und Giftstoffe im Wasser und wird regelmäßig erneuert.'],
+['Phosphatadsorber','Granulat, das Phosphat aus dem Wasser bindet, etwa bei Algenwuchs; Wirkung nach Anleitung beobachten.'],
+['Umkehrosmose (UOA)','Anlage, die Leitungswasser zu sehr reinem Wasser aufbereitet, das du zum Ansetzen und Nachfüllen nutzt.'],
+['Leitwert','Elektrische Leitfähigkeit des Wassers, die mit dem Salzgehalt steigt und schnell gemessen werden kann.'],
+['Refraktometer','Optisches Messgerät für die Salinität; einmal kalibrieren, dann sehr genau.'],
+['Aräometer / Spindel','Schwimmendes Messgerät für die Dichte des Wassers; einfacher, aber meist ungenauer als ein Refraktometer.'],
+['Alkalinität','Fachbegriff für die Pufferkapazität des Wassers, oft gleichgesetzt mit der Karbonathärte.'],
+['Redoxpotenzial','Maß dafür, wie stark das Wasser oxidiert; wird von manchen als Hinweis auf die Wasserqualität genutzt.'],
+['Kalkwasser','Gesättigte Calciumhydroxid-Lösung, die beim Nachfüllen Calcium liefert und den pH-Wert stabilisiert.'],
+['Kalkreaktor','Gerät, das mit CO₂ Kalkgranulat auflöst und so Calcium und KH ins Wasser abgibt.'],
+['Balling-Methode','Getrennte Dosierung von Calcium-, KH- und Magnesiumlösungen, die Calcium, KH und Magnesium im Gleichgewicht halten soll.'],
+['Zeolith-Methode','Dosierstrategie mit Mineralien und Bakterienpräparaten, vor allem für nährstoffarme Becken mit SPS-Korallen.'],
+['Spurenelemente','Stoffe wie Jod, Strontium oder Eisen, die Tiere in sehr kleinen Mengen brauchen und die mit der Zeit verbraucht werden.'],
+['ICP-Test','Laboranalyse des Wassers auf viele Elemente gleichzeitig; hilft bei der Suche nach Mangel oder Ballast.'],
+['Redfield-Verhältnis','Richtwert für das Verhältnis von Kohlenstoff, Stickstoff und Phosphor in Algen und Korallen, genutzt zur Steuerung von Nährstoffen.'],
+['Frostfutter','Eingefrorenes Futter wie Mysis oder Artemia; vor dem Füttern auftauen und gegebenenfalls abspülen.'],
+['Copepoden','Winzige Kleinkrebse im Becken, die als natürliches Futter dienen, besonders für Mandarinfische.'],
+['Strömungspumpe (Wavemaker)','Pumpe, die durch wechselnde Strömung Korallen und Fische mit Futter und Sauerstoff versorgt und Ablagerungen löst.'],
+['PAR / Kelvin','PAR misst die für Pflanzen und Korallen nutzbare Lichtmenge, Kelvin beschreibt nur die Lichtfarbe.'],
+['Photoperiode','Beleuchtungsdauer pro Tag; lange Zeiten fördern Algen, zu kurze können Korallen schwächen.'],
+['Mondlicht','Schwaches Nachtlicht, das den natürlichen Mondzyklus nachahmt und das Verhalten mancher Tiere beeinflusst.'],
+['Cyanobakterien','Sogenannte Schmieralgen: bakterieller Belag in rot, grün oder braun, oft bei Nährstoffungleichgewicht und schwacher Strömung.'],
+['Dinoflagellaten (Dinos)','Einzeller, die braune Schleimfäden oder Bläschen bilden können; schwer zu bekämpfen, oft bei instabilen oder niedrigen Nährstoffen.'],
+['Überlauf','Bauteil, das Wasser aus dem Aquarium ins Technikbecken leitet, damit der Wasserspiegel konstant bleibt.'],
+['Teilwasserwechsel','Austausch eines Teils des Beckenwassers, um Nährstoffe zu senken und Spurenelemente aufzufüllen.'],
+['Verdunstung','Das Wasser verdunstet, das Salz bleibt zurück; deshalb wird mit Osmosewasser nachgefüllt, nicht mit Salzwasser.'],
+['Schwarmfisch','Fisch, der in der Gruppe lebt und sich nur in mehreren Tieren wohlfühlt, zum Beispiel Chromis.'],
+['Territorialität','Verhalten, ein Revier zu verteidigen; wichtig bei der Auswahl der Fische, damit es nicht zu Streit kommt.'],
+['sp. / spec.','Abkürzung hinter dem Gattungsnamen für eine nicht näher bestimmte Art, zum Beispiel Acropora sp.']
+];
+function cmp(i){const j=CMP.indexOf(i);if(j<0){if(CMP.length<4)CMP.push(i)}else CMP.splice(j,1);go()}
+const cc=()=>{if(CMP.length<2)return '<p class=mu>Setze bei zwei bis vier Fischen einen Haken, um sie zu vergleichen.</p>';const F=CMP.map(i=>FISH[i]),v=+S.tank.v||0,c='<td style="white-space:normal;min-width:120px">';
+return `<div class=t><table><tr><th>${F.map(f=>'<th>'+img(f,36)+'<br>'+f[0]).join('')}</tr>`+[['Endgröße',f=>f[2]+' cm'],['Mindestbecken',f=>f[1]+' L'+(v?(v>=f[1]?' ✔':' ✖'):'')],['Temperament',f=>TMP[f[3]]],['Korallen',f=>RS[f[4]]],['Hinweis',f=>f[6]]].map(r=>`<tr><td><b>${r[0]}</b>${F.map(f=>c+r[1](f)).join('')}</tr>`).join('')+'</table></div>'+(v?'':'<p class=mu>Trage dein Beckenvolumen ein, um die Eignung zu sehen.</p>')};
+const LL=()=>{const q=LQ.toLowerCase();let h='';
+if(LS=='f')h=FISH.map((f,i)=>[f,i]).filter(([f])=>(f[0]+f[6]).toLowerCase().includes(q)&&(LF=='all'||(LF=='reef'&&f[4]==0)||(LF=='small'&&f[1]<=150))).map(([f,i])=>`<div class=row><label style="display:flex;gap:8px;flex:1;color:var(--tx);font-size:15px"><input type=checkbox style="width:auto" ${CMP.includes(i)?'checked':''} onchange="cmp(${i})">${img(f,44)}<span><b>${f[0]}</b> <span class="chip c${f[4]}">${RS[f[4]]}</span><br><span class=mu>ab ${f[1]} L · ${f[2]} cm · ${TMP[f[3]]}<br>${f[6]}</span></span></label><div style="text-align:right"><button class=s onclick="FI=${i};go('f')">Check</button><br><a href="${lx(f)}" target=_blank rel=noopener style="font-size:13px;color:var(--ac)">Lexikon ↗</a></div></div>`).join('');
+else if(LS=='c')h=COR.filter(c=>(c[0]+c[1]+c[5]).toLowerCase().includes(q)).map(c=>`<div class=row><div><b>${c[0]}</b> <span class="chip c${c[4]}">${DF[c[4]]}</span><br><span class=mu>${c[1]} · Licht: ${c[2]} · Strömung: ${c[3]}<br>${c[5]}</span></div></div>`).join('');
+else h=GL.filter(g=>(g[0]+g[1]).toLowerCase().includes(q)).map(g=>`<div class=row><div><b>${g[0]}</b><br><span class=mu>${g[1]}</span></div></div>`).join('');
+return h||'<p class=mu>Nichts gefunden.</p>'};
+V.l=()=>`<div class=card><h2>📖 Meerwasser-Lexikon</h2><p class=mu>Mehr Arten, Fotos und Haltungserfahrungen: <a href="https://www.meerwasser-lexikon.de/mainCategory/1.html" target=_blank rel=noopener style="color:var(--ac)">meerwasser-lexikon.de ↗</a></p><div class=g style="grid-template-columns:repeat(3,1fr)">${[['f','Fische'],['c','Korallen &amp; Co.'],['g','Fachbegriffe']].map(([k,n])=>`<button class="${LS==k?'b':'s'}" style="margin:0;padding:8px" onclick="LS='${k}';LQ='';go()">${n}</button>`).join('')}</div><input placeholder="Suchen …" value="${e(LQ)}" oninput="LQ=this.value;$('ll').innerHTML=LL()" style="margin-top:8px"></div>`+(LS=='f'?`<div class=card><h2>Fischvergleich</h2>${cc()}</div>`:'')+`${LS=='f'?lfc():''}<div class=card id=ll>${LL()}</div>`;
+const known=x=>{const a=String(x.n).toLowerCase();return a.length>=4&&FISH.find(f=>{const b=f[0].toLowerCase();return b.includes(a)||a.includes(b)})};
+V.f=()=>{const f=FISH[FI],v=+S.tank.v||0,live=S.t.filter(x=>x.t=='Fisch'&&!x.x),R=[],add=(s,t)=>R.push([s,t]);
+if(!v)add(1,'Beckengröße fehlt – bitte unter „Becken &amp; Technik“ eintragen.');
+else add(v<f[1]?2:v<f[1]*1.3?1:0,`Beckengröße: empfohlen mindestens ${f[1]} Liter, dein Becken hat ${v} Liter.`);
+add(f[4],'Korallen: '+RS[f[4]]+'.');
+if(f[3]==2&&live.length)add(2,'Aggressiv: kann vorhandene Fische jagen oder verletzen.');
+else if(f[3]<2&&live.some(x=>{const k=known(x);return k&&k[3]==2}))add(1,'Du hältst bereits aggressive Fische – der Neuling könnte gemobbt werden.');
+else add(0,'Temperament: '+TMP[f[3]]+', passt zu deinem Besatz.');
+const same=live.filter(x=>{const k=known(x);return k&&k[5]==f[5]});
+if(same.length)add(TERR.includes(f[5])?1:0,TERR.includes(f[5])?'Gleiche Gruppe bereits vorhanden ('+same.map(x=>e(x.n)).join(', ')+'): Revierstreit möglich. Nur in großen Becken, am besten gleichzeitig einsetzen.':'Gleiche Gruppe bereits vorhanden – bei Schwarm- und Paarfischen kein Problem.');
+if(v){const cm=live.reduce((a,x)=>a+((known(x)||[])[2]||8)*(+x.c||1),0)+f[2],mx=v/10;add(cm>mx*1.3?2:cm>mx?1:0,`Besatz: ${cm} cm Gesamtlänge (ausgewachsen). Faustregel für dein Becken: etwa ${Math.round(mx)} cm (1 cm pro 10 Liter).`)}
+const w=Math.max(...R.map(r=>r[0]));
+return `<div class=card><h2>Passt der Fisch ins Becken?</h2><label>Fischart wählen</label><select onchange="FI=+this.value;go()">${FISH.map((x,i)=>`<option value=${i} ${i==FI?'selected':''}>${x[0]}</option>`).join('')}</select>
+<div style="text-align:center;margin-top:10px">${img(f,80)}</div><p class=mu style="margin-top:8px">Ausgewachsen ${f[2]} cm · ab ${f[1]} Liter · ${TMP[f[3]]} · ${RS[f[4]]}<br>${f[6]}<br><a href="${lx(f)}" target=_blank rel=noopener style="color:var(--ac)">Diese Fischgruppe im Meerwasser-Lexikon ansehen ↗</a></p></div>
+<div class=card><h2><span class="chip c${w}">${['Passt gut','Mit Einschränkungen','Eher nicht geeignet'][w]}</span></h2>${R.map(r=>`<div class=row><span class="x${r[0]}">${['✔','⚠','✖'][r[0]]}</span><span style="flex:1">${r[1]}</span></div>`).join('')}
+<p class=mu>Gesamtbesatz zählt nur eingetragene, lebende Fische unter „Tiere“. Unbekannte Arten werden mit 8 cm gerechnet. Alles sind grobe Richtwerte – informiere dich zusätzlich über die jeweilige Art.</p></div>`};
+go();chk();setInterval(chk,36e5);
+(async()=>{try{if(!window.claude)return;const u=await claude.use('user'),db=await claude.use('db');if(!u||!db)return;const id=await u.id();if(!id)return;
+const r=db.doc('data/users/'+id+'/state'),sn=await r.get();ref=r;
+if(sn.exists&&sn.data().s){S=JSON.parse(sn.data().s);go()}else dbSave()}catch(x){}})();
+async function resetAll(){if(!confirm('Wirklich alle Daten löschen?'))return;try{localStorage.removeItem('mw')}catch(x){}if(ref)try{await ref.delete()}catch(x){}location.reload()}
+</script></body></html>
